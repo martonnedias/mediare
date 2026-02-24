@@ -1,0 +1,244 @@
+
+
+--- C:/Users/tonne/SITES/mediare_mgcf/Projeto Mediare Doc/Projeto Mediare v1.pdf ---
+
+ESPECIFICAÇÃO TÉCNICA E ESTRATÉGICA
+PROJETO: App de Gestão de Guarda Compartilhada e Compliance
+Familiar
+Versão: 2.0 (Estratégia de MVP e Viabilidade Comercial) Status: Definição de Escopo e
+Arquitetura Foco: Segurança Jurídica, Gestão Financeira e Redução de Conflitos
+1. SUMÁRIO EXECUTIVO
+O aplicativo é uma plataforma SaaS (Software as a Service) focada na mediação digital da guarda
+compartilhada. Diferente de agendas comuns, este sistema atua como uma ferramenta de
+compliance familiar, transformando a rotina de convivência e finanças em dados auditáveis com
+validade jurídica.
+Proposta de Valor:
+1. Segurança Jurídica: Geração de provas robustas (Linha do Tempo Imutável).
+2. Paz Financeira: Intermediação de pagamentos e rateio automático.
+3. Redução de Atrito: Mediação de comunicação via Inteligência Artificial.
+2. PERFIS DE USUÁRIO E PERMISSÕES
+Genitor Colaborativo: Usa todas as funções de aprovação, chat e pagamentos.
+Genitor Unilateral (Modo Diário de Bordo): Utiliza o app individualmente para registrar
+provas e organizar a rotina, independente da adesão do ex-cônjuge.
+Criança (Perfil Dependente): Acesso limitado à agenda e sistema de gamificação de
+tarefas/metas .
+Auditor/Advogado: Acesso de leitura aos relatórios exportados (PDFs assinados).
+3. ESTRUTURA DE MÓDULOS E FUNCIONALIDADES
+3.1 Módulo de Gestão de Convivência (Calendário Inteligente)
+Calendário Oficial: Visualização clara dos dias de guarda baseada no acordo cadastrado.
+Fluxo de Troca de Datas: Sistema formal de solicitação (motivo + nova data) que exige
+aprovação explícita, recusa ou registro de silêncio .
+Filtro de Resguardo (Novo): Configuração de horários de "não perturbe" nos dias sem a
+criança, silenciando notificações não urgentes.
+Check-in de Convivência: Registro manual de retirada/devolução da criança para prova de
+cumprimento.
+3.2 Módulo Financeiro e Transacional (Fintech)
+Rateio Automático: Configuração da divisão de despesas (ex: 50/50, 70/30).
+Solicitação de Despesa: Cadastro de gastos com obrigatoriedade de anexo (foto/PDF) e
+categorização (Saúde, Escola, Lazer) .
+Pagamento Integrado (Novo): Geração de Pix ou Boleto dentro do app. O pagamento baixa
+a pendência automaticamente e anexa o comprovante bancário ao registro, eliminando
+fraudes ou esquecimentos.
+3.3 Módulo de Comunicação e Mediação (Chat Seguro)
+Chat Oficial: Canal exclusivo para assuntos da criança, separado por tópicos.
+Moderação por IA: Filtro de agressividade que impede ou alerta sobre mensagens hostis
+antes do envio.
+Formalização: Ferramenta para transformar mensagens de texto em "Acordos" ou "Tarefas"
+com um clique.
+3.4 Módulo Jurídico e Provas (Core do Investimento)
+Linha do Tempo Imutável: Registro cronológico de eventos. Itens não podem ser apagados,
+apenas retificados com log de auditoria.
+Hash de Integridade: Tecnologia antifraude aplicada a todas as fotos, áudios e vídeos para
+garantir que não houve edição digital.
+Relatórios Auditáveis: Exportação de PDF com assinatura digital, contendo logs de acesso,
+financeiro e conversas, pronto para uso em tribunal .
+Registro de Ocorrências: Formulário para documentar quebras de acordo, atrasos ou
+ameaças com classificação de gravidade .
+3.5 Módulo de Integração e Emergência (Novo)
+Botão de Emergência Médica: Disparo de alerta crítico com localização em tempo real para
+o outro genitor em caso de acidente/hospital.
+Integração API (Roadmap): Conexão futura com portais escolares e planos de saúde.
+4. FLUXOS DE EXPERIÊNCIA DO USUÁRIO (UX CRÍTICA)
+Fluxo A: Negociação de Troca de Datas
+1. Solicitação: Genitor A propõe troca de data com justificativa.
+2. Análise IA: Sistema verifica tom da mensagem.
+3. Decisão: Genitor B recebe notificação com botões "Aprovar" ou "Recusar".
+4. Conclusão: Calendário atualiza automaticamente e evento é logado no histórico jurídico.
+Fluxo B: Pagamento de Despesa
+1. Registro: Genitor A lança despesa de R$ 200,00 (Medicamento) + Foto da Receita.
+2. Cobrança: Genitor B recebe notificação de sua parte (R$ 100,00).
+3. Pagamento: Genitor B clica em "Pagar com Pix" no app.
+4. Compensação: App reconhece pagamento, transfere valor ao Genitor A e gera comprovante
+auditável vinculado à despesa.
+5. ARQUITETURA TÉCNICA E SEGURANÇA
+Frontend: Framework Flutter (iOS/Android unificado).
+Backend: Python/Node.js com arquitetura de microsserviços.
+Banco de Dados: PostgreSQL (Dados relacionais) + Firebase (Chat Realtime).
+Armazenamento: Nuvem criptografada (AWS S3) para mídias.
+Segurança: Criptografia ponta a ponta e conformidade total com LGPD .
+Integridade: Algoritmo de Hashing para validação de provas digitais.
+6. MODELO DE NEGÓCIO (MONETIZAÇÃO)
+1. Assinatura Freemium:
+Free: Calendário básico e Chat (retenção).
+Premium (R$ 29,90/mês): Relatórios Jurídicos ilimitados, Hash de Integridade, IA Coach
+e Armazenamento em nuvem.
+2. Receita Transacional: Taxa de conveniência sobre pagamentos realizados dentro do app.
+3. B2B (Advogados): Venda de licenças em lote para escritórios de advocacia oferecerem aos
+clientes.
+7. STRATÉGIA DE MVP (ROADMAP DE LANÇAMENTO)
+Para garantir viabilidade de investimento e entrada rápida no mercado, a Versão 1.0 conterá
+estritamente:
+1. Modo Unilateral e Colaborativo (Cadastro).
+2. Calendário de Guarda e Solicitação de Trocas.
+3. Chat com Moderação Básica.
+4. Solicitação Financeira (ainda sem gateway de pagamento nativo, apenas registro).
+5. Exportação de Relatório PDF Simples.
+Funcionalidades como Gamificação, Integração API e Pagamento In-App serão implementadas na
+Versão 2.0 (Growth).
+
+
+--- C:/Users/tonne/SITES/mediare_mgcf/Projeto Mediare Doc/Projeto Mediare v2.pdf ---
+
+DOCUMENTO DE ESPECIFICAÇÃO TÉCNICA
+PRODUTO: App de Gestão de Guarda & Compliance Familiar
+Versão do Produto: 2.0 (Growth, Fintech & Ecosystem) Status: Especificação de Escala e
+Monetização Objetivo: Expansão de funcionalidades para retenção, engajamento infantil e
+transações financeiras reais.
+1. VISÃO ESTRATÉGICA DA VERSÃO 2.0
+Enquanto a V1.0 resolveu a "dor" (conflito e provas), a V2.0 foca no "ganho" (conveniência,
+centralização e educação). O aplicativo deixa de ser apenas uma ferramenta de registro para se
+tornar o Sistema Operacional da Família Separada.
+Pilares da Versão 2.0:
+1. Ecossistema Fintech: Processamento real de pagamentos dentro do app.
+2. Engajamento Infantil (Gamificação): Transformar obrigações em conquistas para a criança.
+3. Conectividade (Open Family): Integrações automáticas com escolas e planos de saúde.
+2. ARQUITETURA DE MÓDULOS EXPANDIDA
+2.1 Módulo Fintech Integrado (Revenue Core)
+Substitui o registro manual de gastos por transações reais, gerando receita.
+Carteira Digital Familiar: Cada genitor possui uma wallet virtual no app.
+Gateway de Pagamentos:
+Pix In-App: O Genitor A solicita R$ 200,00. O Genitor B paga via Pix dentro do app. O
+sistema divide a taxa, transfere o valor e gera o comprovante auditável
+instantaneamente .
+Pagamento Recorrente: Configuração de "Mesada Automática" ou "Pensão Alimentícia"
+via cartão de crédito ou débito automático.
+Split de Pagamento (Rateio na Fonte):
+Pagamento de boletos (ex: Escola) diretamente pelo app. O boleto é lido, e o app cobra a
+parte de cada um (ex: 50/50) antes de liquidar o boleto original.
+2.2 Módulo de Gamificação e Educação (Child Experience)
+Focado em tornar o app amigável e desejável para a criança .
+Sistema de Recompensas (Tokenomics Simplificado):
+Tarefas concluídas (ex: "Fazer dever de casa", "Arrumar quarto na casa do pai") geram
+"StarPoints".
+Os pontos podem ser trocados por recompensas definidas pelos pais (ex: "1h extra de
+videogame", "Ida ao cinema").
+Jornada do Herói: Visualização lúdica da agenda da criança (interface colorida, avatares
+personalizáveis), reduzindo a ansiedade da troca de casas.
+Metas Educativas: Gráficos de evolução escolar e comportamental visíveis para a criança e
+para os pais.
+2.3 Módulo "Open Family" (Integrações API)
+Conexão com serviços externos para acabar com a retenção de informações.
+Portal Escolar (Scraper/API):
+Importação automática de notas, faltas e agenda de provas do portal da escola.
+Notificação simultânea para pai e mãe quando uma nova nota é lançada.
+Saúde Conectada:
+Upload automático de receitas digitais (via QR Code de receitas médicas padrão ICP-
+Brasil).
+Histórico de vacinação integrado (conectado ao ConecteSUS se viável regulatoriamente).
+2.4 Módulo de IA Preditiva (Coach 2.0)
+Evolução da IA reativa para proativa .
+Análise de Sentimento em Tendência:
+Relatório mensal que mostra a "Curva de Tensão" entre os genitores.
+Alerta preventivo: "Atenção: Historicamente, discussões aumentam na semana anterior
+ao Natal. Sugerimos definir o acordo de fim de ano agora."
+Otimização de Guarda:
+A IA analisa o histórico e sugere ajustes na rotina: "Notamos que a criança chega
+atrasada na escola 80% das vezes nas segundas-feiras. Que tal alterar a troca de guarda
+para domingo à noite?"
+3. MODELO DE NEGÓCIO DA VERSÃO 2.0
+A V2.0 introduz novas linhas de receita baseadas no volume de uso e transações.
+Fonte de
+Receita
+Descrição
+Modelo de
+Cobrança
+SaaS
+Premium
+Acesso
+completo a
+Relatórios
+Jurídicos, Hash
+e Mídias.
+Assinatura
+Mensal/Anual
+(B2C)
+Taxa
+Fintech
+Processamento
+de pagamentos
+% ou Taxa
+Fixa por
+transação
+Fonte de
+Receita
+Descrição
+Modelo de
+Cobrança
+e split de
+boletos.
+Marketplace
+Sugestão de
+serviços
+(Psicólogos,
+Advogados,
+Peritos).
+Lead Fee
+(Taxa por
+indicação)
+B2B2C
+Venda para
+Escolas (para
+gestão de
+alunos com pais
+separados).
+Licença
+Corporativa
+4. FLUXOS DE UX AVANÇADOS (User Experience)
+Fluxo: "O Pagamento da Escola sem Brigas"
+1. Gatilho: O app detecta (via integração ou e-mail) o boleto da escola.
+2. Notificação: Ambos recebem: "Boleto da Escola (R$ 1.000) vence dia 10. Sua parte é R$
+500."
+3. Ação: Genitor A autoriza o pagamento de sua parte na wallet. Genitor B faz o mesmo.
+4. Liquidação: O app junta os valores e paga o boleto original.
+5. Registro: O comprovante é salvo na Linha do Tempo Financeira. Se um não pagar, o app
+registra a inadimplência específica daquela parte no relatório jurídico.
+Fluxo: "A Criança Engajada"
+1. Tarefa: Genitor cria tarefa "Ler 10 páginas do livro".
+2. Execução: Criança marca como feito e envia foto da página.
+3. Validação: Genitor aprova.
+4. Recompensa: App toca som de vitória e adiciona 50 StarPoints à conta da criança.
+5. REQUISITOS TÉCNICOS ADICIONAIS
+Para suportar a V2.0, a infraestrutura deve ser atualizada:
+Segurança Bancária: Implementação de certificação PCI-DSS (para dados de cartão) e
+compliance com Banco Central (para atuar como subadquirente ou parceiro de BaaS -
+Banking as a Service).
+Gamification Engine: Motor de regras para gerenciar pontos, níveis e recompensas em
+tempo real.
+Web Scrapers Seguros: Robôs para buscar notas em portais escolares (com consentimento
+de login).
+Data Lake: Estrutura para armazenar dados comportamentais anônimos para treinar a IA
+preditiva.
+6. ROTEIRO DE IMPLEMENTAÇÃO (Upgrade V1 -> V2)
+1. Fase 1 (Fintech): Integração com API de pagamentos (ex: Iugu, Asaas ou Stripe) para
+permitir cobrança via Pix.
+2. Fase 2 (Gamificação): Lançamento do "Modo Criança" com interface simplificada.
+3. Fase 3 (Conectividade): Beta com as 5 maiores plataformas de gestão escolar do país.
+4. Fase 4 (Marketplace): Abertura para cadastro de profissionais (psicólogos/advogados)
+recomendados pela IA.
+7. CONCLUSÃO PARA INVESTIDORES
+A Versão 2.0 mitiga o risco de churn (cancelamento) ao criar barreiras de saída altas:
+1. Financeira: O usuário depende do app para pagar contas.
+2. Emocional: A criança está engajada com o sistema de recompensas.
+3. Dados: O histórico escolar e de saúde está centralizado ali.
+O app deixa de ser um "mal necessário" (para lidar com o ex) e vira um "bem indispensável" (para
+gerir a vida do filho).

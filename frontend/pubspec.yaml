@@ -1,0 +1,45 @@
+name: mediare_mgcf
+version: 1.0.0+1
+description: MEDIARE - MGCF Flutter App
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_bloc: ^8.0.0
+  firebase_auth: ^5.0.0
+  firebase_core: 3.15.2
+  google_sign_in: ^6.2.1
+  provider: ^6.0.0
+  responsive_builder: ^0.5.0
+  google_fonts: ^5.0.0
+  google_maps_flutter: ^2.5.3
+  intl: ^0.20.2
+  http: ^1.1.0
+  url_launcher: ^6.1.11
+  file_picker: ^8.1.4
+  brasil_fields: ^1.13.0
+  mask_text_input_formatter: ^2.9.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.5
+  internet_connection_checker: 1.0.0+1
+  connectivity_plus: ^6.0.5
+  uni_links: ^0.5.1
+  sentry_flutter: ^9.14.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  firebase_auth_mocks: any
+  google_sign_in_mocks: any
+  firebase_core_platform_interface: any
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/images/

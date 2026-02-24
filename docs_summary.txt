@@ -1,0 +1,1056 @@
+
+
+====================
+FILE: Guia de Construção Layout MEDIARE.txt
+====================
+
+PROMPT COMPLETO PARA CONSTRUÇÃO DO LAYOUT DO
+MEDIARE
+Sistema de Gestão de Guarda & Compliance Familiar
+CONTEXTO: Você é um designer UX/UI especialista em SaaS e aplicativos web/mobile. Sua missão
+é criar o layout completo e funcional do MEDIARE - MGCF (Mediador de Guarda & Compliance
+Familiar), uma plataforma para gestão de guarda compartilhada com validade jurídica.
+INSTRUÇÕES GERAIS
+1. PLATAFORMAS
+Crie layouts para:
+Web (Desktop): Versão completa com sidebar e dashboard expandido
+Web (Tablet): Adaptação responsiva
+Mobile (iOS/Android): Bottom navigation e cards verticais
+2. IDENTIDADE VISUAL
+Paleta de Cores:
+Primária (Azul Confiança): #1E3A8A - Navbar, botões principais, cabeçalhos
+Secundária (Verde Acordo): #059669 - Ações positivas (aprovar, confirmar, pagar)
+Alerta (Laranja): #F59E0B - Pendências, notificações
+Crítico (Vermelho): #DC2626 - Recusas, atrasos, inadimplência
+Neutro (Cinza): #6B7280 - Textos secundários
+Background: #F3F4F6 - Fundo de cards
+Branco: #FFFFFF - Fundo principal
+Modo Criança (Gamificação):
+Roxo Mágico: #8B5CF6 - Pontos, conquistas
+Amarelo Estrela: #FCD34D - StarPoints, recompensas
+Rosa Diversão: #EC4899 - Badges, níveis
+Tipografia:
+Família: Inter (títulos e corpo) / Nunito (Modo Criança)
+Tamanhos: H1: 32px, H2: 24px, H3: 20px, Corpo: 16px, Pequeno: 14pxPesos: Bold (700), SemiBold (600), Regular (400)
+Ícones:
+Biblioteca: Heroicons (web) / Material Icons (mobile)
+Estilo: Outline para navegação, Solid para ações
+3. PRINCÍPIOS DE DESIGN
+✅ Clareza: Informações hierarquizadas, sem poluição visual
+✅ Confiança: Design sóbrio e profissional (contexto jurídico)
+✅ Usabilidade: Máximo 3 cliques para qualquer ação
+✅ Responsividade: Mobile-first, adaptável a todos os dispositivos
+✅ Acessibilidade: WCAG 2.1 (contraste mínimo 4.5:1, navegação por teclado)
+✅ Feedback Visual: Estados claros (loading, sucesso, erro, aviso)
+ESTRUTURA DE NAVEGAÇÃO
+WEB (Desktop)
+Navbar Superior:
+┌─────────────────────────────────────────────────────────────┐
+│ [Logo MEDIARE] [Seletor Família ▼] [🔔3] [👤 João] │
+└─────────────────────────────────────────────────────────────┘
+Componentes:
+1. Logo: Clicável, retorna à Home
+2. Seletor de Família (Context Switcher): Dropdown com lista de famílias cadastradas + botão
+"Adicionar Família"
+3. Notificações: Badge com contador de pendências
+4. Avatar do Usuário: Dropdown com: Meu Perfil, Configurações, Plano Premium, Sair
+Sidebar Esquerda (Fixa):
+┌─────────────────────┐
+│ 🏠 Início │
+│ 📅 Calendário │
+│ 💰 Financeiro │
+│ 💬 Chat │
+│ 🎯 Compromissos │
+│ 📍 Endereços │
+│ 🎮 Gamificação │
+│ 📊 Relatórios ││ ⚙️ Configurações │
+└─────────────────────┘
+MOBILE
+Bottom Navigation (5 itens principais):
+┌─────────────────────────────────────────────┐
+│ 🏠 📅 💰 💬 ⋮ │
+│ Início Agenda Finanças Chat Mais │
+└─────────────────────────────────────────────┘
+Hamburger Menu (☰) para itens secundários:
+Compromissos
+Endereços
+Gamificação
+Relatórios
+Configurações
+TELAS OBRIGATÓRIAS (CRIE WIREFRAMES DETALHADOS)
+TELA 1: DASHBOARD (Página Inicial)
+Elementos Obrigatórios:
+1. Saudação Personalizada:
+"Olá, [Nome]! 👋"
+Data atual por extenso
+2. Card: Próximos Compromissos (Destaque):
+Listar próximos 2-3 compromissos
+Informações: Data/Hora, Título, Responsável
+Botões: [Ver Detalhes] [Check-in]
+3. Card: Resumo Financeiro:
+Valor que você deve
+Valor que você tem a receber
+Botão: [Ver Detalhes]
+4. Card: Mensagens Não Lidas:Contador de mensagens
+Prévia da última mensagem
+Botão: [Abrir Chat]
+5. Card: Tarefas Pendentes:
+Lista de ações que aguardam resposta:
+Aprovar orçamento
+Confirmar troca de data
+Pagar despesa
+Checkboxes interativos
+Layout Web:
+Grid 2 colunas: Compromissos (esquerda, 60%) + Financeiro + Mensagens (direita, 40%)
+Tarefas Pendentes: Full-width abaixo
+Layout Mobile:
+Stack vertical (1 coluna)
+Cards empilhados na ordem de prioridade
+TELA 2: CALENDÁRIO DE GUARDA
+Elementos Obrigatórios:
+1. Filtro por Filho:
+Chips clicáveis com foto + nome da criança
+Opção "Todos"
+2. Calendário Mensal:
+Visualização tradicional (7 colunas)
+Cores por responsável:
+Verde: Dia com Pai
+Azul: Dia com Mãe
+Laranja: Troca pendente
+Vermelho: Compromisso não cumprido
+3. Navegação:
+Botões: [← Mês Anterior] [Mês Atual] [Próximo Mês →]
+4. Lista de Eventos do Dia Selecionado:
+Card expandido com:
+HorárioTítulo do evento
+Status (✅ Confirmado, ⏳ Agendado, ❌ Não cumprido)
+Botões de ação contextuais
+5. Botões de Ação:
+[+ Novo Compromisso]
+[Solicitar Troca de Data]
+Interações:
+Clicar em um dia: Expande lista de eventos
+Hover em evento: Mostra tooltip com detalhes resumidos
+TELA 3: FINANCEIRO (Gestão de Despesas)
+Elementos Obrigatórios:
+1. Abas de Filtro:
+[Todas as Despesas] [Pendentes] [Pagas] [Orçamentos]
+2. Card: Resumo Mensal:
+Total de despesas
+Sua parte (baseada no rateio)
+Valor pago
+Valor pendente
+Botão: [📊 Ver Gráfico Detalhado]
+3. Botões de Ação:
+[+ Nova Despesa]
+[+ Novo Orçamento]
+4. Lista de Despesas Recentes:
+Card por despesa contendo:
+Ícone da categoria (🏥 Saúde, 📚 Escola, 🍕 Alimentação)
+Título + Nome da criança
+Data
+Valor total + Sua parte
+Status: ✅ Pago, ⏳ Aguardando Pagamento, ❌ Atrasado
+Botões: [Ver Comprovante] [Pagar com Pix] (se pendente)
+Modal: Nova Despesa:
+Campos:Família (dropdown)
+Criança (dropdown)
+Categoria (dropdown: Saúde, Escola, Alimentação, Lazer, Outros)
+Descrição (textarea)
+Valor Total (input numérico com máscara R$)
+Rateio (radio buttons: 50/50, 70/30, 100% Mãe, 100% Pai, Personalizado)
+Comprovante (upload de arquivo)
+Botões: [Cancelar] [Criar Despesa]
+TELA 4: CHAT COM MODERAÇÃO IA
+Elementos Obrigatórios:
+1. Abas de Tópicos:
+[Geral] [Saúde] [Escola] [Finanças] [+ Novo Tópico]
+2. Área de Mensagens:
+Balões de mensagem alinhados:
+Esquerda: Mensagens do outro genitor
+Direita: Suas mensagens
+Informações por mensagem:
+Nome do remetente
+Horário de envio
+Status de leitura (✓ Enviado, ✓✓ Lido)
+3. Campo de Entrada:
+Input de texto expansível
+Botões: [📎 Anexar] [🎤 Áudio] [➤ Enviar]
+4. Alerta de Moderação IA (Modal):
+Aparece quando mensagem contém linguagem inadequada
+Mostra:
+Mensagem original
+Sugestão neutra da IA
+Botões: [Usar Sugestão] [Editar] [Enviar Mesmo]
+Interações:
+Clicar em mensagem: Opções (Responder, Transformar em Tarefa, Transformar em Acordo)
+Anexos: Preview de imagens, ícone para PDFsTELA 5: MODO CRIANÇA (Gamificação)
+IMPORTANTE: Interface completamente diferente, lúdica e segura.
+Tela de Login Modo Criança:
+Avatar grande da criança
+Campo PIN de 4 dígitos (círculos grandes)
+Botão: [Esqueci meu PIN]
+Dashboard Modo Criança:
+1. Cabeçalho:
+Avatar + Nome da criança
+Nível atual (Bronze, Prata, Ouro, Platina, Diamante) com ícones de estrelas
+Barra de progresso visual para próximo nível
+Contador de pontos (StarPoints)
+2. Card: Minhas Tarefas:
+Lista de tarefas pendentes
+Cada tarefa mostra:
+Ícone da categoria
+Título
+Pontos que vai ganhar
+Botão: [Marcar como Feito]
+Tarefas concluídas (aguardando aprovação) com badge "Aguardando Papai/Mamãe"
+3. Card: Recompensas:
+Contador de pontos disponíveis
+Botão: [Ver Catálogo]
+4. Card: Conquistas:
+Número de badges desbloqueados
+Botão: [Ver Galeria]
+5. Card: Minha Semana (Jornada do Herói):
+Trilha visual colorida mostrando os 7 dias da semana
+Cada dia com ícone (🏫 Escola, 🏠 Casa do Pai, 🏡 Casa da Mãe)
+Avatar da criança "caminhando" pela trilha
+Catálogo de Recompensas:
+Grid de cards com:
+Ícone da recompensa
+TítuloCusto em pontos
+Botão: [Resgatar] (se tiver pontos) ou "Você precisa de X pontos"
+Paleta Modo Criança:
+Cores vibrantes e alegres
+Animações suaves (confete ao ganhar pontos, estrelinhas piscando)
+Sons de feedback (opcional, configurável)
+TELA 6: ORÇAMENTOS (Aprovação Prévia de Despesas)
+Elementos Obrigatórios:
+1. Abas de Filtro:
+[Pendentes] [Aguardando Aprovação] [Aprovados] [Recusados]
+2. Botão de Ação:
+[+ Novo Orçamento]
+3. Lista de Orçamentos:
+Card por orçamento contendo:
+Ícone da categoria
+Título + Nome da criança
+Criado por (nome do genitor)
+Data de criação
+Valor total
+Rateio proposto
+Sua parte
+Prazo para resposta
+Botões: [Ver Detalhes] [Aprovar] [Negociar] [Recusar]
+Modal: Detalhes do Orçamento:
+Informações completas:
+Descrição detalhada
+Anexos (cotações, prints)
+Histórico de negociações (se houver)
+Gráfico de pizza mostrando rateio proposto
+Botões de ação
+Modal: Negociar Orçamento:
+Slider ou input para ajustar percentual de rateio
+Campo de justificativa (textarea)Botões: [Cancelar] [Enviar Proposta]
+TELA 7: COMPROMISSOS (Gestão Avançada)
+Elementos Obrigatórios:
+1. Filtros:
+Por status: [Todos] [Agendados] [Confirmados] [Em Andamento] [Cumpridos] [Atrasados]
+[Não Cumpridos]
+Por criança (chips)
+2. Botão de Ação:
+[+ Novo Compromisso]
+3. Lista de Compromissos:
+Card por compromisso contendo:
+Ícone do tipo (🏖 Passeio, ✈️ Viagem, 🎉 Festa, 🏊 Atividade)
+Título + Nome da criança
+Data e horário
+Status com badge colorido
+Responsável
+Botões contextuais: [Iniciar] [Ver Detalhes] [Marcar como Concluído]
+Tela: Detalhes do Compromisso:
+Seções:
+1. Informações Gerais:
+Título, data, horário, status
+2. Local:
+Endereço completo
+Botão: [Abrir no Maps]
+3. Transporte:
+Busca: Responsável, local, horário
+Entrega: Responsável, local, horário
+4. Financeiro (se aplicável):
+Despesas previstas
+Quem paga o quê
+5. Checklist:Lista de tarefas pré/pós-compromisso
+Checkboxes interativos
+6. Histórico de Mudanças:
+Timeline de alterações (adiamentos, trocas)
+Botões: [Iniciar Compromisso] [Solicitar Adiamento] [Cancelar]
+TELA 8: ENDEREÇOS (Gestão de Localizações)
+Elementos Obrigatórios:
+1. Filtros:
+[Todos] [Minhas Casas] [Familiares] [Locais Frequentes]
+2. Botão de Ação:
+[+ Novo Endereço]
+3. Lista de Endereços:
+Agrupados por categoria
+Card por endereço contendo:
+Ícone do tipo (🏠 Casa, 👵 Familiar, 🏫 Escola, 🏊 Atividade)
+Nome do local
+Endereço completo
+Badge "Principal" (se aplicável)
+Badge "Compartilhado com parceiro" (se aplicável)
+Contato (se familiar)
+Botões: [Ver no Mapa] [Editar] [Definir como Principal]
+Modal: Novo Endereço:
+Campos:
+Nome do local (ex: "Casa da Avó Paterna")
+Tipo (dropdown: Casa do Pai, Casa da Mãe, Familiar, Escola, Atividade, Outro)
+Endereço completo:
+Rua
+Número
+Complemento
+Bairro
+Cidade
+Estado
+CEPContato (nome + telefone, opcional)
+Checkbox: "Compartilhar com o outro genitor"
+Checkbox: "Definir como endereço principal"
+Botão: Buscar Coordenadas Automaticamente
+Mapa interativo mostrando localização
+Botões: [Cancelar] [Salvar Endereço]
+TELA 9: RELATÓRIOS JURÍDICOS
+Elementos Obrigatórios:
+1. Card: Gerar Novo Relatório:
+Campos:
+Família (dropdown)
+Período: De [data] Até [data]
+Incluir no relatório (checkboxes):
+☑ Calendário e Convivência
+☑ Despesas e Pagamentos
+☑ Comunicação (Chat)
+☑ Compromissos e Cumprimento
+☐ Orçamentos
+Botão: [Gerar Relatório PDF]
+2. Lista: Relatórios Anteriores:
+Card por relatório contendo:
+Ícone PDF
+Título (ex: "Relatório - Jan/2026")
+Data de geração
+Botões: [Download PDF] [Visualizar]
+Estrutura do PDF (Referência para Design):
+Cabeçalho com logo MEDIARE
+Título: "RELATÓRIO DE CONVIVÊNCIA E COMPLIANCE FAMILIAR"
+Informações das partes (nomes, CPF, RG)
+Seções numeradas:
+i. Calendário e Convivência
+ii. Despesas e Pagamentos
+iii. Comunicação
+iv. Compromissos e Cumprimento
+Rodapé com:
+Hash SHA-256 do relatórioData e hora de geração
+Aviso de validade jurídica
+TELA 10: CONFIGURAÇÕES
+Seções:
+1. Meu Perfil:
+Foto de perfil (upload)
+Nome completo
+CPF
+RG
+E-mail
+Telefone
+Botão: [Salvar Alterações]
+2. Segurança:
+Alterar senha
+Autenticação em dois fatores (2FA) - toggle
+Dispositivos conectados
+3. Notificações:
+Preferências de notificações (checkboxes):
+E-mail
+Push (mobile)
+SMS
+Tipos de notificação:
+Novos compromissos
+Despesas pendentes
+Mensagens não lidas
+Tarefas da criança (Modo Criança)
+4. Plano e Assinatura:
+Plano atual (Free, Premium, Professional)
+Botão: [Fazer Upgrade]
+Histórico de pagamentos
+5. Privacidade:
+Quem pode ver meus dados
+Exportar meus dados (LGPD)
+Excluir minha contaCOMPONENTES REUTILIZÁVEIS (CRIE DESIGN SYSTEM)
+1. BOTÕES
+Primário:
+Background: #1E3A8A
+Texto: Branco
+Padding: 12px 24px
+Border-radius: 6px
+Hover: Escurecer 10%
+Secundário:
+Background: Branco
+Texto: #1E3A8A
+Border: 2px solid #1E3A8A
+Hover: Inverter cores
+Sucesso (Aprovar):
+Background: #059669
+Texto: Branco
+Perigo (Recusar):
+Background: #DC2626
+Texto: Branco
+Estados:
+Normal
+Hover
+Active
+Disabled (opacidade 50%)
+Loading (spinner animado)
+2. CARDS
+Padrão:
+Background: Branco
+Border: 1px solid #E5E7EB
+Border-radius: 8px
+Padding: 20px
+Box-shadow: 0 1px 3px rgba(0,0,0,0.1)Hover: Elevar (translateY(-2px) + shadow mais forte)
+3. BADGES DE STATUS
+Sucesso:
+Background: #D1FAE5
+Texto: #059669
+Aviso:
+Background: #FEF3C7
+Texto: #F59E0B
+Erro:
+Background: #FEE2E2
+Texto: #DC2626
+Info:
+Background: #DBEAFE
+Texto: #1E3A8A
+4. INPUTS
+Campo de Texto:
+Width: 100%
+Padding: 12px 16px
+Border: 1px solid #D1D5DB
+Border-radius: 6px
+Focus: Border #1E3A8A + shadow azul suave
+Label:
+Display: block
+Margin-bottom: 8px
+Font-weight: 600
+Color: #374151
+5. MODAIS
+Estrutura:
+Overlay escuro (rgba(0,0,0,0.5))
+Card centralizado
+Largura máxima: 600px (desktop), 90% (mobile)
+Cabeçalho com título + botão fechar (✕)Corpo com conteúdo
+Rodapé com botões de ação
+6. NOTIFICAÇÕES (Toasts)
+Posição: Canto superior direito
+Tipos:
+✅ Sucesso (verde)
+❌ Erro (vermelho)
+⚠️ Aviso (laranja)
+ℹ️ Informação (azul)
+Comportamento:
+Aparecer com animação slide-in
+Auto-fechar após 5 segundos
+Botão manual de fechar (✕)
+ANIMAÇÕES E MICRO-INTERAÇÕES
+1. TRANSIÇÕES SUAVES
+Todas as mudanças de estado: 0.3s ease
+2. LOADING STATES
+Skeleton screens para carregamento de listas
+Spinners para ações assíncronas
+3. FEEDBACK VISUAL (Gamificação)
+Confete ao ganhar pontos
+Estrelas piscando ao subir de nível
+Som de "ding" ao completar tarefa (opcional)
+RESPONSIVIDADE
+BREAKPOINTSADAPTAÇÕES MOBILE
+Navbar:
+Logo centralizada
+Hamburger menu (☰) esquerda
+Notificações + avatar direita
+Cards:
+Stack vertical (1 coluna)
+Padding reduzido (16px)
+Botões full-width
+Formulários:
+Inputs full-width
+Botões empilhados verticalmente
+Teclado numérico para valores monetários
+ACESSIBILIDADE (WCAG 2.1)
+OBRIGATÓRIO:
+1. Contraste:
+/* Mobile First */
+Base: < 640px (mobile)
+@media (min-width: 640px) {
+/* Tablet */
+}
+@media (min-width: 1024px) {
+/* Desktop */
+/* Mostrar sidebar */
+}
+@media (min-width: 1280px) {
+/* Large Desktop */
+}
+Css CopiarTexto principal: Mínimo 4.5:1
+Textos grandes (>18px): Mínimo 3:1
+2. Navegação por Teclado:
+Todos os elementos interativos acessíveis via Tab
+Focus visível (outline: 2px solid #1E3A8A )
+Skip to main content link
+3. ARIA Labels:
+4. Textos Alternativos:
+Todas as imagens com alt descritivo
+Ícones decorativos com aria-hidden="true"
+PERFORMANCE
+OTIMIZAÇÕES OBRIGATÓRIAS:
+1. Lazy Loading:
+Imagens carregadas sob demanda
+Componentes pesados (gráficos, relatórios) apenas quando visíveis
+2. Compressão de Imagens:
+Fotos de perfil: Max 200x200px, JPEG 80%
+Comprovantes: Max 1024px, JPEG 80%
+Ícones: SVG sempre que possível
+3. Caching:
+Service Worker para funcionamento offline
+Cache de dados estáticos (endereços, configurações)
+<button aria-label="Aprovar orçamento de viagem para praia">
+Aprovar
+</button>
+<div role="alert" aria-live="polite">
+Despesa criada com sucesso!
+</div>
+Html CopiarENTREGÁVEIS ESPERADOS
+1. WIREFRAMES (Baixa Fidelidade)
+Todas as 10 telas principais
+Versões desktop + mobile
+2. MOCKUPS (Alta Fidelidade)
+Aplicação da identidade visual completa
+Estados interativos (hover, active, disabled)
+3. PROTÓTIPO INTERATIVO
+Navegação entre telas
+Animações e transições
+Feedback visual de ações
+4. DESIGN SYSTEM
+Biblioteca de componentes reutilizáveis
+Documentação de uso
+5. GUIA DE ESTILO
+Paleta de cores com códigos HEX
+Tipografia (fontes, tamanhos, pesos)
+Espaçamentos (grid de 8px)
+Ícones e ilustrações
+FERRAMENTAS RECOMENDADAS
+Figma: Para wireframes, mockups e protótipos
+Adobe XD: Alternativa ao Figma
+Sketch: Para usuários Mac
+InVision: Para prototipagem interativa
+Zeplin: Para handoff com desenvolvedoresOBSERVAÇÕES FINAIS
+1. Priorize a experiência do usuário: O app lida com situações emocionalmente sensíveis
+(separação). Design deve transmitir confiança e organização.
+2. Modo Criança é crítico: Interface completamente diferente, lúdica e segura. Nunca expor
+dados sensíveis (chat dos pais, valores financeiros detalhados).
+3. Validade Jurídica: Design dos relatórios deve ser sóbrio e profissional, adequado para
+apresentação em tribunais.
+4. Teste com usuários reais: Valide o design com pais separados antes da implementação final.
+5. Iteração contínua: O layout deve evoluir com base em feedback e métricas de uso.
+DÚVIDAS OU NECESSIDADE DE ESCLARECIMENTOS: Pergunte antes de prosseguir. Prefiro
+respostas precisas a suposições.
+PRAZO ESPERADO:
+Wireframes: 1 semana
+Mockups: 2 semanas
+Protótipo interativo: 1 semana
+Design System: 1 semana
+TOTAL: 5 semanas para entrega completa
+
+====================
+FILE: MEDIARE__MGCF__MEDIADOR_DE_GUARDA__COM.txt
+====================
+
+Error reading c:\Users\tonne\SITES\mediare_mgcf\Projeto Mediare Doc\MEDIARE__MGCF__MEDIADOR_DE_GUARDA__COM.txt: 'utf-8' codec can't decode byte 0xc3 in position 78: invalid continuation byte
+
+====================
+FILE: PlanoV1 - Parte2.txt
+====================
+
+Para "blindar" o projeto e evitar aquelas surpresas desagradáveis na semana do lançamento
+(como rejeição da Apple ou o app travando quando a internet cai), eu acrescentaria um Módulo de
+"Infraestrutura Invisível" e Qualidade de Vida.
+Desenvolvedores focados em features (telas) às vezes esquecem das exigências das Lojas
+(Apple/Google) e do comportamento no "mundo real" (internet ruim).
+Aqui está o Adendo Final de Instruções para você anexar ao Blueprint:
+MÓDULO 7: INFRAESTRUTURA INVISÍVEL & COMPLIANCE DE LOJA
+(Instruções para evitar rejeição na Apple Store e bugs de produção)
+1. Gerenciamento de Conectividade (Offline-First)
+"DEV: O Brasil tem áreas de sombra de sinal (escolas, subsolos). O app não pode
+travar se o usuário estiver sem internet.
+Requisito: Implemente cache local (usando Hive ou SQFlite no Flutter).
+Cenário de Check-in: Se o pai fizer check-in sem internet, o app deve salvar
+localmente, mostrar 'Salvo (Pendente de envio)' e sincronizar automaticamente
+assim que a conexão voltar."
+2. Push Notifications "Inteligentes" (Deep Linking)
+"DEV: Não quero notificações genéricas ('Você tem uma nova mensagem').
+Requisito: Implemente Deep Linking.
+Cenário: Se a notificação for 'João enviou uma nova despesa', ao clicar nela, o
+app deve abrir diretamente na tela de detalhes daquela despesa, e não na Home.
+Isso é crucial para a usabilidade."
+3. O "Botão de Pânico" da Apple (Exclusão de Conta)
+"DEV: A Apple rejeita apps que permitem criar conta mas não permitem excluir.
+Requisito: Crie a opção 'Excluir Minha Conta' em Configurações.
+Regra de Negócio (Jurídica): O botão deve deixar claro: 'Seus dados pessoais
+serão removidos, mas os registros de convivência e chat serão mantidos
+anonimizados por 5 anos para fins de auditoria judicial, conforme Termos de
+Uso.' (Isso protege o app juridicamente enquanto atende à Apple)."
+4. Feature Flags (Controle Remoto)
+"DEV: Use Firebase Remote Config.
+Motivo: Se a API da OpenAI (Chat Inteligente) ficar muito cara ou der erro no dia
+do lançamento, eu quero ter um 'botão' no painel administrativo para desligar a IA
+instantaneamente sem precisar lançar uma atualização nova na loja."
+5. Monitoramento de Erros (Sentry/Crashlytics)
+"DEV: Instale o Sentry ou Firebase Crashlytics desde o dia 1.Motivo: Se o app fechar sozinho na cara do usuário, eu preciso saber exatamente
+em qual linha de código isso aconteceu e qual o modelo do celular dele. Não
+podemos esperar o usuário reclamar."
+A "Definição de Pronto" (Definition of Done - DoD)
+Por fim, entregue esta lista de verificação para o desenvolvedor. O pagamento final só deve ser
+liberado se estes itens estiverem marcados:
+1. [ ] O cadastro bloqueia CPFs inválidos?
+2. [ ] O modo Unilateral realmente esconde o chat e não pede e-mail do ex?
+3. [ ] Consigo cadastrar 2 famílias e os dados não se misturam?
+4. [ ] O PDF gerado tem o Hash de integridade no rodapé?
+5. [ ] O app funciona se eu colocar o celular em "Modo Avião" e tentar navegar na agenda?
+
+====================
+FILE: PlanoV1.txt
+====================
+
+MASTER BLUEPRINT: APP GESTÃO DE GUARDA & COMPLIANCE
+FAMILIAR
+Versão: 1.0 (MVP Consolidado) Status: Pronto para Desenvolvimento Arquitetura: Multi-Tenant
+Familiar (Suporte a Múltiplas Famílias)
+1. STACK TECNOLÓGICO OBRIGATÓRIO
+A escolha tecnológica visa segurança jurídica (backend robusto) e fluidez no celular (app nativo).
+Backend (API & Lógica): Python 3.11+
+Framework: FastAPI (recomendado pela velocidade) ou Django Ninja.
+Bibliotecas
+Chave: pydantic (validação), reportlab (PDFs), openai ou langchain (IA).
+Frontend (Mobile): Flutter (Dart)
+Build híbrido obrigatório: Android e iOS com o mesmo código base.
+Banco de Dados: PostgreSQL (Relacional).
+Armazenamento de Mídia (Provas): AWS S3 (com versionamento ativado) ou Firebase
+Storage.
+Autenticação: Firebase Auth ou Auth0 (com suporte a 2FA futuro).
+2. MODELAGEM DE DADOS (DATABASE SCHEMA)
+A estrutura suporta "Um Pai, Várias Famílias". A tabela family_units é o coração do sistema.
+2.1 Tabela: users (Genitores)
+Identificação civil rigorosa.
+id (UUID, PK)
+email (String, Unique)
+full_name (String, Not Null)
+cpf (String, Unique, Not Null) - Validado via algoritmo.
+rg (String, Not Null)
+photo_url (String, Not Null) - Selfie obrigatória para validar identidade.
+subscription_plan (Enum: FREE, PREMIUM) - Define se pode criar mais de 1 família.
+created_at (DateTime)
+2.2 Tabela: family_units (Núcleos Familiares) - CORE
+Isola os dados entre diferentes relacionamentos do mesmo usuário.
+id (UUID, PK)
+name (String) - Ex: "Família com Maria", "Guarda do Pedro".
+creator_id (UUID, FK -> users)partner_id (UUID, FK -> users, Nullable) - O outro genitor (Nulo se for Unilateral).
+mode (Enum: COLABORATIVO, UNILATERAL)
+created_at (DateTime)
+2.3 Tabela: children (Filhos)
+Vinculada ao Núcleo Familiar, não apenas ao pai.
+id (UUID, PK)
+family_unit_id (UUID, FK) - A qual acordo esta criança pertence.
+full_name (String, Not Null)
+cpf (String, Unique, Not Null) - Obrigatório.
+rg (String, Nullable)
+birth_date (Date, Not Null)
+blood_type (Enum, Nullable) - Dado de segurança (A+, O-, etc).
+photo_url (String, Not Null) - Obrigatório.
+active (Boolean, Default: True)
+2.4 Tabelas de Operação (Eventos, Finanças, Chat)
+Todas devem ter a coluna family_unit_id para garantir isolamento.
+calendar_events : id , family_unit_id , child_id (vínculo
+específico), date_start , date_end , type (Visita, Escola, Médico), status , audit_hash .
+expenses : id , family_unit_id , child_id (quem gerou o
+gasto), amount , category , proof_url (S3), payer_id , is_settled .
+chat_messages : id , family_unit_id , sender_id , content (criptografado), is_moderated
+(IA atuou?), read_at (Timestamp de leitura), sent_at .
+3. DETALHAMENTO FUNCIONAL (REGRAS DE NEGÓCIO)
+MÓDULO 1: CADASTRO RIGOROSO (WIZARD OBRIGATÓRIO)
+O usuário entra em um "túnel" de cadastro. Não pode sair sem concluir.
+1. Etapa Identidade:
+Formulário: Nome, CPF e RG.
+Regra Técnica: Validação algorítmica do CPF no Backend (API). Retornar 400 Bad
+Request se inválido.
+Bloqueio: O botão "Próximo" só ativa após upload da Foto de Perfil.
+2. Etapa Filhos (Loop):
+Modal para adicionar N filhos.
+Exige: Nome, CPF da Criança e Foto.
+Regra: Cadastro só finaliza se children_count >= 1 .
+3. Etapa Configuração do Núcleo (Modo):Escolha: Colaborativo ou Unilateral.
+Regra Unilateral (Modo Silencioso): Se selecionado, define partner_id = NULL e
+suprime qualquer envio de convite/email. O sistema opera como "Diário de Bordo".
+MÓDULO 2: GESTÃO MULTI-FAMÍLIA (LÓGICA PREMIUM)
+Gerenciamento de múltiplos acordos.
+1. Context Switcher (Seletor de Família):
+Menu no topo do app para alternar entre "Família A" e "Família B".
+Ao trocar, todo o app (calendário, chat, saldo) recarrega filtrando pelo
+novo family_unit_id .
+2. Regra do Paywall (Criação de Nova Família):
+Ao clicar em "Adicionar Nova Família (+)", o Backend verifica:
+MÓDULO 3: CALENDÁRIO & ROTINA
+Foco na clareza visual e prova de convivência.
+1. Filtro por Filho:
+Barra superior com "Chips" (Botões com foto do filho).
+Clicar na foto do "João" exibe apenas eventos vinculados ao child_id do João.
+2. Check-in de Troca (Prova de Pontualidade):
+Botão "Confirmar Retirada/Devolução".
+Captura obrigatória de Geolocalização (Lat/Long) e Hora do Servidor.
+MÓDULO 4: FINANCEIRO & COBRANÇA
+Organização de contas por núcleo.
+1. Nova Despesa:
+Seleção obrigatória: "Para qual família?" (Se houver mais de uma) -> "Para qual filho?".
+Upload de Comprovante: Processamento imediato para S3 e geração de Hash.
+2. Consolidado Financeiro:
+O usuário vê o total geral de dívidas, mas pode detalhar "Quanto devo para a Mãe do
+João" vs "Quanto devo para a Mãe da Maria".
+MÓDULO 5: CHAT COM IA & LEITURA
+if user.plan == 'FREE' and user.families_count >= 1:
+return Error("Funcionalidade exclusiva Premium. Assine para gerenciar múltipl
+PythonMediação de conflitos e prova de visualização.
+1. Middleware de IA (Sentimento):
+Antes de salvar a mensagem, a API Python envia o texto para análise (OpenAI/LLaMA).
+Prompt do Sistema: "Analise se há agressividade, xingamentos ou ameaças."
+Se Tóxico > 70%: Retorna sugestão de reescrita neutra. Bloqueia envio original.
+2. Prova de Leitura (Read Receipts):
+Sistema de Duplo Check (✔✔).
+Quando o destinatário abre a tela de chat, o app envia um sinal ao backend que atualiza
+o campo read_at . Isso serve como prova jurídica de ciência.
+MÓDULO 6: JURÍDICO (RELATÓRIOS)
+O produto final do app.
+1. Exportação PDF:
+O usuário seleciona: Família, Período, Tipos de Dados (Chat, Financeiro, Agenda).
+O Backend gera um PDF contendo:
+Cabeçalho com dados das partes (CPFs validados).
+Linha do tempo cronológica.
+Rodapé com Hash SHA-256 de integridade.
+4. INSTRUÇÕES DE DESENVOLVIMENTO (DEV NOTES)
+4.1 Segurança de Dados (Isolation)
+"DEV: A segurança entre famílias é crítica. Implemente Row Level Security (RLS) ou
+Scopes no ORM para garantir que uma query nunca retorne dados de
+um family_unit_id ao qual o usuário logado não pertença. O vazamento de dados
+entre ex-cônjuges diferentes é inaceitável."
+4.2 Imutabilidade (Soft Deletes)
+"DEV: NUNCA use DELETE físico no banco de dados para mensagens, eventos ou
+despesas. Use uma coluna deleted_at . Se o usuário apagar uma mensagem, ela
+desaparece da UI, mas deve constar no relatório jurídico como 'Registro apagado pelo
+usuário em [Data]'."
+4.3 Performance de Mídia
+"DEV: Implemente compressão de imagem no Flutter antes do upload. Redimensione
+fotos de perfil e comprovantes para Max 1024px (JPEG 80%). Não aceite uploads
+brutos da câmera (4K/10MB) para economizar banda e storage."
+4.4 Validação de Documentos"DEV: Implemente validação real de CPF ( validate_cpf_br ) no backend. O sistema
+não pode aceitar '111.111.111-11'. O rigor cadastral é o que dá valor jurídico ao app."
+5. CRONOGRAMA DE SPRINT (ORDEM DE BATALHA)
+Sprint 1 (Base): Configuração AWS/Firebase, Auth, Tabela Users e Wizard de Cadastro
+Rigoroso.
+Sprint 2 (Núcleo): Lógica Multi-Família ( FamilyUnits ), Gestão de Filhos e Lógica Premium.
+Sprint 3 (Rotina): Calendário com Filtros por Filho e Check-in GPS.
+Sprint 4 (Financeiro): Uploads S3, Hash e Vínculo de Despesas.
+Sprint 5 (Inteligência): Chat com Análise de Sentimento (IA) e Prova de Leitura.
+Sprint 6 (Entrega): Gerador de Relatórios PDF, Testes de Segurança e Deploy.
+
+====================
+FILE: Prompts para MEDIARE - MGCF_## MEDIADOR DE GUARDA & COM.txt
+====================
+
+Vou montar um “roteiro mestre” de prompts para você usar com o Tony Dev Medire: Apex Beast Mode no modo Plan (e
+alguns no modo Ask/Agent) para cobrir o projeto inteiro da Versão 1.0 do MEDIARE - MGCF, seguindo exatamente o
+documento mestre e os 3 arquivos ( PRODUCT_SPEC , ARCHITECTURE , PLAN ).
+A ideia é:
+Cada bloco abaixo = um prompt que você pode literalmente copiar e colar no VS Code, escolhendo o modo
+adequado (Plan / Agent / Ask).
+A ordem segue o roadmap (Sprints 1–27).
+Você pode ir usando um por vez, na sequência.
+Se em algum trecho você quiser, depois eu detalho mais (por exemplo, gerar também o texto que deve ir
+no PRODUCT_SPEC.modulo4.md ou algo assim).
+0. Prompt inicial – alinhar Tony com o projeto (Plan ou Agent)
+Use uma vez, no começo do trabalho, em Plan:
+Prompt 0 – Inicializar contexto do MEDIARE
+“Tony, considere que este repositório é o projeto MEDIARE - MGCF (Mediador de Guarda & Compliance Familiar).
+Use como fonte de verdade:
+O PDF _MEDIARE__MGCF__MEDIADOR_DE_GUARDA__COM.pdf
+Os arquivos docs/PRODUCT_SPEC.md , docs/ARCHITECTURE.md e docs/PLAN.md (se existirem).
+Em modo Plan, quero que você leia o documento mestre e verifique/ajuste esses três arquivos para que:
+1. Reflitam exatamente a visão da Versão 1.0 (MVP com Gamificação Completa).
+2. Considerem que o frontend será Flutter para Android, iOS e Web (Flutter Web).
+3. Sigam o roadmap de Sprints 1–27 descrito no PDF.
+Monte um plano de passos para revisar/criar esses arquivos, execute o plano e, ao final, me entregue um resumo
+das mudanças e próximos passos.”
+1. Infraestrutura + Autenticação + Núcleo Familiar (Sprints 1–4)
+1.1 Infra, Auth, Users, Family Units, Children (Sprint 1–2) – Plan
+Prompt 1 – Sprint 1–2 (Infra + Auth + Cadastro Rigoroso)
+“Tony, em modo Plan, implemente a Fase 1 – Sprint 1–2 (Infraestrutura e Autenticação) do MEDIARE - MGCF,
+conforme o documento mestre e nossos arquivos PRODUCT_SPEC , ARCHITECTURE e PLAN .
+Escopo deste plano:
+Backend FastAPI:
+Configurar projeto base com Python 3.11, FastAPI, PostgreSQL, Redis, Celery e integrações mínimas
+necessárias.
+Criar modelos e migrações para: users , family_units , family_members , children .
+Integrar autenticação com Firebase Authentication + JWT.Criar endpoints de onboarding:
+POST /onboarding/complete-profile (dados pessoais, CPF/RG, foto de perfil).
+POST /onboarding/create-family (primeira família, modo colaborativo/unilateral, pelo menos 1 criança).
+Frontend Flutter (Mobile + Web):
+Tela de onboarding (wizard) em duas etapas: perfil e família/crianças.
+Layout responsivo (uso de um componente tipo ResponsiveLayout para web).
+Testes mínimos:
+Pelo menos 1 teste de API para cada endpoint principal.
+Verificação básica de multi-tenant por family_unit_id onde já for aplicável.
+Siga os padrões do Tony Dev Apex (segurança, validação, tipagem, testes).
+No final, atualize o PLAN.md marcando Sprint 1–2 como concluída e me entregue um resumo técnico + um
+resumo em linguagem de negócio.”
+1.2 Multi-família, Modo Colaborativo vs Unilateral, Context Switcher (Sprint 3–4) – Plan
+Prompt 2 – Sprint 3–4 (Núcleo Familiar + Multi-família)
+“Tony, em modo Plan, implemente a Fase 1 – Sprint 3–4 (Núcleo Familiar) do MEDIARE - MGCF.
+Use PRODUCT_SPEC , ARCHITECTURE e PLAN como referência.
+Escopo:
+Backend:
+Completar lógica multi-família: um mesmo user pode possuir e/ou participar de múltiplas family_units .
+Garantir isolamento por family_unit_id em queries relacionadas.
+Adicionar endpoints para:
+Listar famílias do usuário logado.
+Trocar família ativa (se necessário via backend).
+Frontend Flutter Mobile + Web:
+Implementar Context Switcher de família (ex.: dropdown ou tela de seleção).
+Adaptar telas iniciais para sempre considerar a família ativa.
+Garantir que filtros por criança e contexto de família estejam coerentes.
+Atualizar PRODUCT_SPEC para o Módulo 1, se faltar algum detalhe, com fluxos de:
+Modo Colaborativo vs Unilateral.
+Multi-família.
+No final, rode testes e marque Sprint 3–4 como concluída no PLAN.md , com resumo técnico e de negócio.”
+2. Endereços, Calendário & Convivência (Sprints 5–8)
+2.1 Módulo 2 – Gestão de Endereços (Sprint 5–6) – Plan
+Prompt 3 – Sprint 5–6 (Módulo 2 – Endereços)“Tony, em modo Plan, implemente o Módulo 2 – Gestão de Endereços e Localizações do MEDIARE - MGCF,
+correspondendo à Sprint 5–6 do roadmap.
+Escopo:
+Backend:
+Criar tabelas locations e location_usage_history conforme ARCHITECTURE.md .
+Endpoints CRUD seguros para endereços (respeitando family_unit_id e papéis).
+Integração com Google Maps API para geocodificação (endereço → latitude/longitude).
+Registro de histórico de uso de localização (check-ins, compromissos, etc.).
+Frontend Flutter Mobile + Web:
+Telas para cadastrar, listar, editar e remover endereços.
+Seleção de tipo de endereço (Casa Pai, Casa Mãe, Escola etc.).
+Visualização de mapa (quando possível) usando Google Maps Flutter.
+Layout responsivo para Web.
+Atualizar PRODUCT_SPEC (se necessário) com fluxos de Módulo 2 e critérios de aceite.
+Ao final, rode testes básicos de API e marque Sprint 5–6 como concluída no PLAN.md , com resumo técnico e de
+negócio.”
+2.2 Módulo 3 – Calendário & Convivência (Sprint 7–8) – Plan
+Prompt 4 – Sprint 7–8 (Módulo 3 – Calendário & Convivência)
+“Tony, em modo Plan, implemente o Módulo 3 – Calendário & Convivência do MEDIARE - MGCF, conforme Sprint 7–8.
+Escopo:
+Backend:
+Criar tabelas custody_calendar_rules , custody_events e checkins .
+Endpoints para:
+Definir regras de guarda (simples para o MVP).
+Listar eventos de convivência por criança, período e família.
+Registrar check-in de retirada/devolução com GPS, incluindo status on_time , late , etc.
+Lógica simples de registro de atrasos com base em horários previstos.
+Frontend Flutter Mobile + Web:
+Calendário (visão mensal/semanal) com filtro por criança.
+Ação de check-in com GPS (usar localização do dispositivo).
+Estado visual claro de atrasos/ok.
+Versão lúdica simplificada para o Modo Criança, sem detalhes de conflito.
+Atualizar PRODUCT_SPEC do Módulo 3 com fluxos e critérios de aceite se faltar algo.
+No fim, rode testes (incluindo um fluxo completo de criação de evento + check-in) e marque Sprint 7–8 como
+concluída no PLAN.md .”3. Financeiro & Orçamentos (Sprints 9–12)
+3.1 Financeiro Base (Sprint 9–10) – Plan
+Prompt 5 – Sprint 9–10 (Financeiro Base – Módulo 4, parte 1)
+“Tony, em modo Plan, implemente o Financeiro Base (Sprints 9–10) do Módulo 4 – Financeiro & Orçamentos do
+MEDIARE - MGCF.
+Escopo:
+Backend:
+Criar tabelas expenses e expense_shares conforme ARCHITECTURE.md .
+Endpoints para:
+Criar despesa com upload de comprovante (S3 ou Firebase Storage).
+Calcular hash SHA‑256 do comprovante e salvar em attachment_hash_sha256 .
+Gerar rateios automáticos ( expense_shares ) com percentuais configuráveis.
+Listar despesas por família, criança, período.
+Frontend Flutter Mobile + Web:
+Tela para registro de despesa com anexos.
+Tela de listagem de despesas com filtros básicos.
+Layout responsivo com visão em cards (mobile) e tabela (web).
+Atualizar PRODUCT_SPEC do Módulo 4 com fluxo detalhado de registro de despesa e critérios de aceite.
+Rode testes de upload, hash e criação de rateio; após sucesso, marque Sprint 9–10 como concluída no PLAN.md .”
+3.2 Sistema de Orçamentos (Sprint 11–12) – Plan
+Prompt 6 – Sprint 11–12 (Orçamentos – Módulo 4, parte 2)
+“Tony, em modo Plan, implemente a parte de Orçamentos do Módulo 4 – Financeiro & Orçamentos, correspondendo
+às Sprints 11–12 do ROADMAP.
+Escopo:
+Backend:
+Criar tabela budgets conforme ARCHITECTURE.md .
+Endpoints para:
+Criar orçamento (descrição, valor estimado, criança opcional).
+Aprovar/recusar orçamento.
+Alterar status para proposed , approved , rejected , canceled .
+Vincular orçamento a despesas ou compromissos quando aplicável.
+Frontend Flutter Mobile + Web:
+Telas para:
+Criar orçamento.
+Listar orçamentos pendentes, aprovados, rejeitados.Aprovar/recusar com feedback claro.
+Atualizar PRODUCT_SPEC do Módulo 4 com o fluxo de orçamentos (pré-aprovação de gastos) e critérios de aceite.
+No final, rodar testes e marcar Sprint 11–12 como concluída.”
+4. Comunicação & IA – Chat (Sprints 13–14)
+Prompt 7 – Sprint 13–14 (Módulo 5 – Chat com IA)
+“Tony, em modo Plan, implemente o Módulo 5 – Chat com IA & Mediação do MEDIARE - MGCF, Sprints 13–14.
+Escopo:
+Backend:
+Criar tabelas family_chats , chat_messages , chat_message_reads .
+Endpoints para:
+Enviar mensagem no chat oficial da família.
+Listar mensagens por família (com paginação).
+Marcar mensagens como lidas ( read receipts ).
+Integrar com OpenAI GPT‑4:
+Calcular toxicity_score e sentiment_score .
+Definir moderation_status ( allowed , blocked , needs_rewrite ).
+Definir política: bloquear mensagem muito tóxica ou exigir reescrita antes de enviar.
+Frontend Flutter Mobile + Web:
+Tela de chat estilo mensageria, com:
+Indicação de mensagem bloqueada/sugerida.
+Indicação de lido/não lido.
+Opção de aceitar sugestão de reescrita da IA antes do envio.
+Atualizar PRODUCT_SPEC do Módulo 5 com fluxos (incluindo moderação e reescrita) e critérios de aceite.
+Rode testes (incluindo um fluxo que envia mensagem tóxica e recebe bloqueio/sugestão) e marque Sprint 13–14
+como concluída.”
+5. Gamificação Infantil (Sprints 15–17)
+Prompt 8 – Sprint 15–17 (Módulo 6 – Gamificação Completa / Modo Criança)
+“Tony, em modo Plan, implemente o Módulo 6 – Gamificação Infantil (Modo Criança) do MEDIARE - MGCF, cobrindo
+Sprints 15–17.
+Escopo:
+Backend:
+Criar tabelas tasks , rewards , child_points_ledger , child_levels .
+Endpoints para:
+Criar/editar/excluir tarefas associadas a uma criança.Registrar conclusão de tarefa pela criança e aprovação pelo pai/mãe.
+Manter o ledger de pontos (ganhos, gastos).
+Criar recompensas e registrar resgate.
+Atualizar nível da criança com base em pontos.
+Frontend Flutter Mobile + Web:
+Modo Pais:
+Gerenciar tarefas, recompensas e acompanhar pontos.
+Modo Criança:
+Interface lúdica “Jornada do Herói”:
+Lista de tarefas do dia.
+Feedback visual e sonoro ao completar tarefas.
+Exibição de pontos, nível atual e recompensas disponíveis.
+Garantir que o Modo Criança NÃO exiba dados sensíveis (conflitos, finanças).
+Layout responsivo: mobile (cartões grandes, toque) e web (pode ter painéis e gráficos).
+Atualizar PRODUCT_SPEC do Módulo 6 com fluxos do Modo Criança e critérios de aceite.
+Teste um fluxo inteiro (criar tarefa → criança marca como feita → pai aprova → pontos/nível atualizados) e
+marque Sprints 15–17 como concluídas.”
+6. Compromissos Avançados (Sprints 18–19)
+Prompt 9 – Sprint 18–19 (Módulo 7 – Compromissos Avançados)
+“Tony, em modo Plan, implemente o Módulo 7 – Compromissos Avançados do MEDIARE - MGCF, para as Sprints 18–
+19.
+Escopo:
+Backend:
+Criar
+tabelas appointments , appointment_checklists , appointment_checklist_status , appointment_status_history .
+Implementar 9 status de execução (Agendado, Confirmado, Em Andamento, Cumprido, Atrasado, Cancelado,
+etc. — seguindo o documento mestre, e se houver dúvidas anotar em PRODUCT_SPEC ).
+Lógica de detecção automática de atrasos usando horário planejado vs real (check-ins).
+Frontend Flutter Mobile + Web:
+Telas para criação/edição de compromissos:
+Tipo (passeio, viagem, consulta, atividade, etc.).
+Responsáveis (transporte, retorno, financeiro).
+Integração com endereços cadastrados.
+Exibição dos status com mudanças em tempo real e histórico.
+Checklists pré e pós-compromisso.
+Atualizar PRODUCT_SPEC do Módulo 7 com os 9 status, fluxos e critérios.
+Rodar testes de criação/atualização de compromissos e marcar Sprint 18–19 como concluída.”7. Relatórios Jurídicos (Sprints 20–21)
+Prompt 10 – Sprint 20–21 (Módulo 8 – Relatórios Jurídicos)
+“Tony, em modo Plan, implemente o Módulo 8 – Relatórios Jurídicos do MEDIARE - MGCF, conforme Sprints 20–21.
+Escopo:
+Backend:
+Criar tabelas event_log e reports .
+Garantir que eventos importantes (despesas, atrasos, check-ins, compromissos, chat, tarefas) sejam enviados
+para event_log .
+Implementar geração de relatório em PDF (com uma lib como reportlab ), com:
+Linha do tempo cronológica.
+Filtros por período, criança, tipo de dado.
+Estatísticas de cumprimento.
+Calcular hash SHA‑256 do PDF e exibir no rodapé.
+Frontend Flutter Mobile + Web:
+Tela para configuração de relatórios (filtros) e geração.
+Lista de relatórios gerados com opção de download/visualização.
+Atualizar PRODUCT_SPEC do Módulo 8 e critérios de aceite.
+Rodar testes gerando um relatório completo e marque Sprint 20–21 como concluída.”
+8. Infraestrutura Invisível, Testes, Lançamento (Sprints 22–27)
+8.1 Infraestrutura Invisível (Sprints 22–23) – Plan
+Prompt 11 – Sprint 22–23 (Módulo 9 – Infraestrutura Invisível)
+“Tony, em modo Plan, implemente o Módulo 9 – Infraestrutura Invisível do MEDIARE - MGCF, Sprints 22–23.
+Escopo:
+Frontend Flutter:
+Comportamento offline-first usando Hive (cache de dados críticos).
+Fila de pendências para sincronizar quando a conexão voltar.
+Deep linking para abrir telas específicas via notificações push.
+Integração de feature flags via Remote Config (ex.: ligar/desligar IA).
+Backend:
+Health check endpoint.
+Logs estruturados básicos.
+Integrações:
+Configurar Crashlytics e Sentry.Atualizar ARCHITECTURE.md e, se necessário, PRODUCT_SPEC do Módulo 9 com o que foi implementado.
+Depois, rode testes básicos de offline/online e marque Sprint 22–23 como concluída.”
+8.2 Testes & Ajustes (Sprints 24–25) – Plan
+Prompt 12 – Sprint 24–25 (Testes e Ajustes)
+“Tony, em modo Plan, execute a Fase 1 – Sprints 24–25 (Testes e Ajustes) do MEDIARE - MGCF.
+Escopo:
+Backend:
+Criar/ajustar uma suíte de testes unitários e de integração cobrindo:
+Módulo 1 (cadastro rigoroso),
+Calendário + check-in,
+Financeiro base,
+Chat com IA (mockando OpenAI),
+Gamificação básica.
+Frontend Flutter:
+Adicionar testes de widgets e, se possível, testes de integração para fluxos principais.
+Ajustar UX/UI com base em estados vazios, mensagens de erro e loading.
+Corrigir bugs encontrados.
+Ao final, documente em TESTING.md como rodar os testes e marque Sprints 24–25 como concluídas.”
+8.3 Preparação para Lançamento (Sprints 26–27) – Plan
+Prompt 13 – Sprint 26–27 (Preparação para Lançamento)
+“Tony, em modo Plan, execute as Sprints 26–27 do MEDIARE - MGCF (Preparação para Lançamento).
+Escopo:
+Documentação:
+Atualizar README.md com:
+Visão geral do projeto.
+Como subir ambiente local.
+Como rodar testes.
+Documentar endpoints principais (pode ser em API_DOCS.md ou similar).
+Analytics:
+Adicionar eventos básicos de analytics no app (ex.: criação de família, registro de despesa, uso do Modo
+Criança), conforme suportado pela stack.
+Ajustes finais para publicação em:
+Google Play.
+Apple App Store.Listar num arquivo RELEASE_CHECKLIST.md tudo que foi revisado.
+Ao terminar, me entregue um resumo final do estado da Versão 1.0 (o que o app faz hoje) em linguagem de
+negócio.”
+9. Prompts de manutenção (Ask / Agent)
+9.1 Revisão de segurança e multi-tenant – Agent
+Prompt 14 – Auditoria de segurança e multi-tenant
+“Tony, em modo Agent, faça uma auditoria no projeto MEDIARE - MGCF com foco em:
+Uso consistente de family_unit_id em todas as queries de dados.
+Existência de soft delete onde o documento mestre exige.
+Uso correto de hash SHA‑256 em comprovantes e relatórios.
+Pontos de possível vazamento de dados entre famílias.
+Vá arquivo por arquivo onde for relevante, corrija problemas encontrados e, ao final, gere um resumo das
+correções aplicadas.”
+9.2 Prompts rápidos (Ask) – exemplos
+Use no modo Ask conforme precisar:
+“Tony, explica em português simples o fluxo completo do Módulo 4 (Financeiro & Orçamentos) do jeito que foi
+implementado no código.”
+“Tony, gera um teste unitário para o endpoint de criação de orçamento no Módulo 4, cobrindo o caso de recusa.”
+“Tony, ajusta a tela de calendário para Web, deixando as colunas mais largas e visíveis em resoluções maiores, sem
+quebrar o mobile.”

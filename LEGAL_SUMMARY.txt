@@ -1,0 +1,462 @@
+# RESUMO LEGAL TÉCNICO – MEDIARE - MGCF
+## Guia para implementação jurídica e de compliance no código
+
+Versão: 1.0  
+Data: Fevereiro de 2026  
+Base: Documento Mestre “MEDIARE - MGCF – Visão Geral do Projeto (Versão 1.0)”
+
+---
+
+## 1. FINALIDADE DESTE DOCUMENTO
+
+Este documento traduz os pontos jurídicos e de compliance do **MEDIARE - MGCF** em **requisitos técnicos concretos** para desenvolvimento.
+
+Público-alvo:
+- Arquitetos e devs (incluindo o Tony Dev).
+- Product Owners.
+- Time de segurança/compliance.
+
+Objetivos:
+- Garantir que o código implemente corretamente:
+  - Segurança jurídica (provas, hash, soft delete).
+  - LGPD.
+  - Isolamento multi-tenant por família.
+  - Política de exclusão/anonimização de dados.
+- Servir como checklist para PRs e revisões de módulo.
+
+---
+
+## 2. FUNDAMENTOS LEGAIS E CONCEITUAIS EXTRAÍDOS DO DOCUMENTO MESTRE
+
+Do documento mestre (Versão 1.0) derivam 4 pilares jurídicos/técnicos:
+
+1. **Segurança Jurídica Total**
+   - Registros imutáveis com hash SHA-256.
+   - Relatórios prontos para tribunais.
+   - Linha do tempo auditável.
+   - Soft delete (nunca apaga dados de fato).
+
+2. **LGPD e Dados Sensíveis**
+   - LGPD compliant.
+   - Políticas de retenção de dados.
+   - Anonimização ao excluir conta.
+   - Consentimento explícito para uso de dados.
+   - Proteção especial para dados de crianças/adolescentes.
+
+3. **Isolamento Multi-Tenant por Família**
+   - Cada família é um tenant isolado.
+   - Queries sempre filtradas por `family_unit_id`.
+   - Impossível vazar dados entre famílias.
+   - Row Level Security (RLS) no PostgreSQL.
+
+4. **Confiabilidade Técnica das Provas**
+   - Hash SHA‑256 em todas as mídias relevantes.
+   - Soft delete e histórico completo de mudanças.
+   - Event log consistente alimentando relatórios jurídicos.
+
+Este resumo não cria novas obrigações; apenas organiza o que o documento mestre já exige.
+
+---
+
+## 3. MULTI-TENANT POR FAMÍLIA (ISOLAMENTO TOTAL)
+
+### 3.1 Conceito
+
+- Cada **família** = 1 tenant lógico (`family_unit`).
+- Todos os dados que dizem respeito à dinâmica daquela família são **propriedade** daquele tenant.
+- Um usuário pode participar de múltiplas famílias, mas:
+  - Nunca vê dados de famílias às quais não pertence.
+
+### 3.2 Implementação técnica
+
+**Banco de dados:**
+
+- Tabelas de domínio devem possuir `family_unit_id` sempre que fizer sentido:
+  - `children`
+  - `locations`
+  - `custody_calendar_rules`
+  - `custody_events`
+  - `checkins`
+  - `expenses`
+  - `expense_shares`
+  - `budgets`
+  - `family_chats`
+  - `chat_messages`
+  - `tasks`
+  - `rewards`
+  - `appointments`
+  - `event_log`
+  - etc.
+
+- Habilitar **Row Level Security (RLS)** no PostgreSQL:
+  - Uma policy típica:
+sql CREATE POLICY family_isolation_policy ON expenses FOR SELECT, UPDATE, DELETE USING (family_unit_id = current_setting('app.current_family_id')::uuid);
+
+**Backend:**
+
+- Toda request autenticada deve:
+  - Resolver o usuário Firebase → `users` no banco.
+  - Saber qual é a família ativa (contexto).
+  - Setar `app.current_family_id` na conexão (para RLS).
+
+- Nenhum endpoint pode:
+  - Retornar dados de outra família.
+  - Permitir que um usuário force outro `family_unit_id` via input.
+
+**Testes obrigatórios:**
+
+- Cenário com 2 famílias A e B:
+  - Usuário da família A tentando acessar despesas ou eventos da família B deve sempre receber 403 (ou vazio), nunca dados.
+
+---
+
+## 4. IMUTABILIDADE JURÍDICA: SOFT DELETE + EVENT LOG + HASH
+
+### 4.1 Soft delete obrigatório
+
+Do documento mestre:
+
+> “Soft delete (nunca apaga dados)”  
+> “Imutabilidade jurídica”
+
+**Requisitos técnicos:**
+
+- Entidades críticas **não são apagadas fisicamente**:
+  - `expenses`
+  - `budgets`
+  - `custody_events`
+  - `checkins`
+  - `appointments`
+  - `chat_messages`
+  - `tasks` (se já em uso)
+  - Qualquer entidade que impacte relatórios jurídicos.
+
+- Tabelas devem conter:
+  - `deleted_at TIMESTAMPTZ NULL`
+  - `deleted_by UUID NULL`
+
+- Queries de uso normal **sempre** filtram:
+  - `WHERE deleted_at IS NULL`
+
+- Apenas rotinas de auditoria/admin (futuras) podem visualizar registros soft-deleted.
+
+### 4.2 Event Log (linha do tempo auditável)
+
+Do documento mestre:
+
+> “Linha do tempo imutável”  
+> “Estatísticas de cumprimento”  
+> “Relatórios prontos para tribunais”
+
+**Requisitos técnicos:**
+
+- Criar tabela `event_log` com característica **append-only**:
+
+<div class="widget code-container remove-before-copy"><div class="code-header non-draggable"><span class="iaf s13 w700 code-language-placeholder">sql</span><div class="code-copy-button"><span class="iaf s13 w500 code-copy-placeholder">Copiar</span><img class="code-copy-icon" src="data:image/svg+xml;utf8,%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%0A%20%20%3Cpath%20d%3D%22M10.8%208.63V11.57C10.8%2014.02%209.82%2015%207.37%2015H4.43C1.98%2015%201%2014.02%201%2011.57V8.63C1%206.18%201.98%205.2%204.43%205.2H7.37C9.82%205.2%2010.8%206.18%2010.8%208.63Z%22%20stroke%3D%22%23717C92%22%20stroke-width%3D%221.05%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M15%204.42999V7.36999C15%209.81999%2014.02%2010.8%2011.57%2010.8H10.8V8.62999C10.8%206.17999%209.81995%205.19999%207.36995%205.19999H5.19995V4.42999C5.19995%201.97999%206.17995%200.999992%208.62995%200.999992H11.57C14.02%200.999992%2015%201.97999%2015%204.42999Z%22%20stroke%3D%22%23717C92%22%20stroke-width%3D%221.05%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A" /></div></div><pre id="code-7vjipp4ca" style="color:white;font-family:Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;font-size:1em;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:8px;margin:8px;overflow:auto;background:#011627;width:calc(100% - 8px);border-radius:8px;box-shadow:0px 8px 18px 0px rgba(120, 120, 143, 0.10), 2px 2px 10px 0px rgba(255, 255, 255, 0.30) inset"><code class="language-sql" style="white-space:pre;color:#d6deeb;font-family:Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace;text-align:left;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;font-size:1em;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"><span>  </span><span class="token" style="color:rgb(127, 219, 202)">CREATE</span><span> </span><span class="token" style="color:rgb(127, 219, 202)">TABLE</span><span> event_log </span><span class="token" style="color:rgb(199, 146, 234)">(</span><span>
+</span><span>    id UUID </span><span class="token" style="color:rgb(127, 219, 202)">PRIMARY</span><span> </span><span class="token" style="color:rgb(127, 219, 202)">KEY</span><span class="token" style="color:rgb(199, 146, 234)">,</span><span>
+</span><span>    family_unit_id UUID </span><span class="token" style="color:rgb(127, 219, 202)">NOT</span><span> </span><span class="token" style="color:rgb(255, 88, 116)">NULL</span><span class="token" style="color:rgb(199, 146, 234)">,</span><span>
+</span><span>    event_type </span><span class="token" style="color:rgb(127, 219, 202)">VARCHAR</span><span class="token" style="color:rgb(199, 146, 234)">(</span><span class="token" style="color:rgb(247, 140, 108)">100</span><span class="token" style="color:rgb(199, 146, 234)">)</span><span> </span><span class="token" style="color:rgb(127, 219, 202)">NOT</span><span> </span><span class="token" style="color:rgb(255, 88, 116)">NULL</span><span class="token" style="color:rgb(199, 146, 234)">,</span><span>     </span><span class="token" style="color:rgb(99, 119, 119);font-style:italic">-- ex: expense_created, checkin_performed</span><span>
+</span><span>    entity_type </span><span class="token" style="color:rgb(127, 219, 202)">VARCHAR</span><span class="token" style="color:rgb(199, 146, 234)">(</span><span class="token" style="color:rgb(247, 140, 108)">100</span><span class="token" style="color:rgb(199, 146, 234)">)</span><span> </span><span class="token" style="color:rgb(127, 219, 202)">NOT</span><span> </span><span class="token" style="color:rgb(255, 88, 116)">NULL</span><span class="token" style="color:rgb(199, 146, 234)">,</span><span>    </span><span class="token" style="color:rgb(99, 119, 119);font-style:italic">-- ex: expense, checkin, appointment</span><span>
+</span><span>    entity_id UUID </span><span class="token" style="color:rgb(127, 219, 202)">NOT</span><span> </span><span class="token" style="color:rgb(255, 88, 116)">NULL</span><span class="token" style="color:rgb(199, 146, 234)">,</span><span>
+</span><span>    performed_by_user_id UUID </span><span class="token" style="color:rgb(127, 219, 202)">NOT</span><span> </span><span class="token" style="color:rgb(255, 88, 116)">NULL</span><span class="token" style="color:rgb(199, 146, 234)">,</span><span>
+</span><span>    metadata JSONB </span><span class="token" style="color:rgb(127, 219, 202)">NOT</span><span> </span><span class="token" style="color:rgb(255, 88, 116)">NULL</span><span class="token" style="color:rgb(199, 146, 234)">,</span><span>              </span><span class="token" style="color:rgb(99, 119, 119);font-style:italic">-- detalhes contextuais</span><span>
+</span><span>    created_at TIMESTAMPTZ </span><span class="token" style="color:rgb(127, 219, 202)">NOT</span><span> </span><span class="token" style="color:rgb(255, 88, 116)">NULL</span><span> </span><span class="token" style="color:rgb(127, 219, 202)">DEFAULT</span><span> </span><span class="token" style="color:rgb(130, 170, 255)">now</span><span class="token" style="color:rgb(199, 146, 234)">(</span><span class="token" style="color:rgb(199, 146, 234)">)</span><span>
+</span><span>  </span><span class="token" style="color:rgb(199, 146, 234)">)</span><span class="token" style="color:rgb(199, 146, 234)">;</span><span>
+</span></code></pre></div>
+
+- Não deve ter:
+  - `updated_at`
+  - `deleted_at`
+- Não deve haver operações de:
+  - `UPDATE` ou `DELETE` no `event_log` (regra de negócio + revisão de permissões).
+
+- Eventos mínimos a registrar:
+  - Criação de família / criança.
+  - Criação, mudança de status e soft delete de:
+    - Despesas (`expenses`)
+    - Orçamentos (`budgets`)
+    - Compromissos (`appointments`)
+    - Check-ins (`checkins`)
+  - Mensagens enviadas no chat (`chat_messages`).
+  - Tarefas concluídas e aprovadas (gamificação).
+
+### 4.3 Hash SHA‑256 (integridade de mídias e relatórios)
+
+Do documento mestre:
+
+> “Registros imutáveis com hash SHA‑256”  
+> “Hash SHA‑256 no rodapé” (relatórios)  
+> “Hash de integridade em comprovantes”
+
+**Requisitos técnicos:**
+
+- Calcular hash SHA‑256 de:
+  - Comprovantes de despesas (fotos, PDFs).
+  - Relatórios em PDF.
+  - (Opcional/estratégico) Imagens relevantes atreladas a compromissos.
+
+- Campos:
+
+<div class="widget code-container remove-before-copy"><div class="code-header non-draggable"><span class="iaf s13 w700 code-language-placeholder">sql</span><div class="code-copy-button"><span class="iaf s13 w500 code-copy-placeholder">Copiar</span><img class="code-copy-icon" src="data:image/svg+xml;utf8,%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%0A%20%20%3Cpath%20d%3D%22M10.8%208.63V11.57C10.8%2014.02%209.82%2015%207.37%2015H4.43C1.98%2015%201%2014.02%201%2011.57V8.63C1%206.18%201.98%205.2%204.43%205.2H7.37C9.82%205.2%2010.8%206.18%2010.8%208.63Z%22%20stroke%3D%22%23717C92%22%20stroke-width%3D%221.05%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M15%204.42999V7.36999C15%209.81999%2014.02%2010.8%2011.57%2010.8H10.8V8.62999C10.8%206.17999%209.81995%205.19999%207.36995%205.19999H5.19995V4.42999C5.19995%201.97999%206.17995%200.999992%208.62995%200.999992H11.57C14.02%200.999992%2015%201.97999%2015%204.42999Z%22%20stroke%3D%22%23717C92%22%20stroke-width%3D%221.05%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A" /></div></div><pre id="code-mw40zh65q" style="color:white;font-family:Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;font-size:1em;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:8px;margin:8px;overflow:auto;background:#011627;width:calc(100% - 8px);border-radius:8px;box-shadow:0px 8px 18px 0px rgba(120, 120, 143, 0.10), 2px 2px 10px 0px rgba(255, 255, 255, 0.30) inset"><code class="language-sql" style="white-space:pre;color:#d6deeb;font-family:Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace;text-align:left;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;font-size:1em;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"><span>  </span><span class="token" style="color:rgb(99, 119, 119);font-style:italic">-- Exemplo em expenses</span><span>
+</span><span>  attachment_hash_sha256 </span><span class="token" style="color:rgb(127, 219, 202)">VARCHAR</span><span class="token" style="color:rgb(199, 146, 234)">(</span><span class="token" style="color:rgb(247, 140, 108)">64</span><span class="token" style="color:rgb(199, 146, 234)">)</span><span>
+</span>
+<span>  </span><span class="token" style="color:rgb(99, 119, 119);font-style:italic">-- Exemplo em reports</span><span>
+</span><span>  file_hash_sha256 </span><span class="token" style="color:rgb(127, 219, 202)">VARCHAR</span><span class="token" style="color:rgb(199, 146, 234)">(</span><span class="token" style="color:rgb(247, 140, 108)">64</span><span class="token" style="color:rgb(199, 146, 234)">)</span><span>
+</span></code></pre></div>
+
+- Fluxo mínimo para comprovantes:
+
+  1. Receber upload do arquivo.
+  2. Calcular hash SHA‑256.
+  3. Subir para S3/Firebase Storage.
+  4. Salvar `attachment_url` + `attachment_hash_sha256` na entidade.
+
+- Fluxo mínimo para relatórios:
+
+  1. Gerar PDF via `reportlab` (ou similar).
+  2. Calcular hash SHA‑256 do PDF final.
+  3. Inserir hash em texto no rodapé (`Hash SHA-256: {hash}`).
+  4. Salvar hash em `reports.file_hash_sha256`.
+
+- Testes:
+  - Baixar arquivo → recalcular hash → deve bater com o registrado.
+
+---
+
+## 5. LGPD E DADOS DE CRIANÇAS – REGRAS TÉCNICAS
+
+O documento mestre reforça:
+
+- “LGPD compliant”
+- “Anonimização ao excluir conta”
+- “Dados sensíveis de crianças → risco relevante”
+
+### 5.1 Dados de crianças (Modo Criança)
+
+**Regras de proteção:**
+
+- Dados de crianças armazenados em `children`:
+  - `name`, `birth_date`, `gender` (opcional), `notes` (saúde/observações).
+
+- **Modo Criança**:
+  - Interface lúdica destinada exclusivamente à criança.
+  - **NÃO** pode ter acesso a:
+    - Chat entre adultos.
+    - Despesas, orçamentos, detalhes financeiros.
+    - Relatórios jurídicos e linha do tempo completa.
+    - Logs de conflitos e descumprimentos.
+
+**Implementação:**
+
+- Rotas/telas do Modo Criança devem ser isoladas por:
+  - Permissão/flag de perfil (ex.: login específico ou modo protegido).
+  - Autorização no backend (não apenas no front).
+
+- Qualquer request vindo do Modo Criança deve ser limitada a:
+  - Tarefas da criança.
+  - Pontos e recompensas.
+  - Agenda lúdica simplificada (sem detalhes sensíveis).
+
+### 5.2 Consentimentos (alto nível)
+
+O documento mestre não entra em detalhes de checkbox, mas define que:
+- Deve haver **“Consentimento explícito para uso de dados”**.
+- Em especial, para dados de crianças → maior rigor.
+
+**Orientação técnica mínima:**
+
+- Campos em `users`:
+  - `accepted_terms_at TIMESTAMPTZ`
+  - `accepted_privacy_at TIMESTAMPTZ`
+
+- No onboarding:
+  - Impedir conclusão sem aceitar Termos e Política.
+  - Se o usuário cadastrar crianças → guardar a ação como evento em `event_log` (ex.: `child_data_consent_given`).
+
+---
+
+## 6. EXCLUSÃO DE CONTA E ANONIMIZAÇÃO
+
+Do documento mestre:
+
+> “Exclusão de conta (compliance Apple/Google)”  
+> “Políticas de retenção de dados”  
+> “Anonimização ao excluir conta”
+
+### 6.1 Botão de exclusão (requisito de loja)
+
+**Implementação:**
+
+- Tela clara no app:  
+  - “Excluir minha conta” (menu de configurações).
+
+- Ao acionar:
+  - Pedir confirmação (passo duplo).
+  - Registrar evento em `event_log`: `account_deletion_requested`.
+
+### 6.2 O que acontece tecnicamente
+
+**Imediato:**
+
+- Bloquear login do usuário:
+  - `users.is_active = False` (ou similar).
+
+**Processo de anonimização (assíncrono):**
+
+- Rotina (Celery) que:
+  - Remove/anonimiza dados PESSOALMENTE identificáveis em `users`:
+    - Nome → “Usuário Anônimo {id}”
+    - E-mail → `anonimo_{id}@deleted.local`
+    - CPF/RG/telefone → `NULL`
+    - `photo_url` → deletar arquivo e zerar campo
+  - Mantém:
+    - Relacionamentos e IDs para preservação da linha do tempo (event_log, expenses, checkins etc.).
+
+**Importante:**
+
+- Registros críticos atrelados a esse usuário **não são apagados**:
+  - Devido à necessidade de integridade jurídica (podem ser prova para o outro genitor).
+  - Continuam existindo, mas com o usuário desidentificado em relatórios futuros.
+
+---
+
+## 7. PORTABILIDADE / EXPORTAÇÃO DE DADOS
+
+Mesmo o documento mestre não detalhando explicitamente, a LGPD + escopo jurídico indicam a necessidade de:
+
+- Permitir ao usuário **baixar seus dados** (portabilidade).
+
+**Recomenda-se:**
+
+- Endpoint `/users/me/data-export` que:
+  - Retorna JSON consolidando:
+    - Dados cadastrais do usuário.
+    - Famílias que ele criou.
+    - Crianças vinculadas.
+    - Despesas criadas por ele.
+    - Check-ins realizados por ele.
+    - Compromissos que ele criou.
+    - Chat messages enviadas por ele (desde que não exponha dados de terceiros além do mínimo necessário).
+
+- Este JSON é base para:
+  - Requisições formais de LGPD.
+  - Migração para outro sistema (no futuro).
+
+---
+
+## 8. RELATÓRIOS JURÍDICOS – EXPECTATIVAS TÉCNICAS
+
+Do documento mestre (Módulo 8):
+
+- “Linha do tempo imutável”
+- “Exportação em PDF com assinatura digital”
+- “Hash SHA‑256 no rodapé”
+- “Filtros por período, tipo de dado, criança”
+- “Estatísticas de cumprimento”
+- “Anexos de evidências”
+
+**Orientações técnicas:**
+
+- Geração de PDF:
+  - Utilizar lib estável (ex.: `reportlab`).
+  - Montar relatório a partir de `event_log` + tabelas de domínio.
+  - Incluir:
+    - Cabeçalho: identificação mínima da família e período.
+    - Linha do tempo cronológica.
+    - Estatísticas (% de compromissos honrados, nº de atrasos, nº de despesas, etc.).
+    - Lista de anexos (links para arquivos + hashes).
+
+- Integridade:
+  - Calcular SHA‑256 do PDF final e:
+    - Inserir no rodapé.
+    - Salvar no banco.
+
+- Escopo dos filtros:
+  - Por período (data início/fim).
+  - Por tipo de dado (financeiro, convivência, compromissos, chat relevante).
+  - Por criança.
+
+---
+
+## 9. CHECKLIST JURÍDICO POR MÓDULO (V1.0)
+
+### Módulo 1 – Cadastro Rigoroso & Multi-Família
+
+- [ ] CPF validado e único.
+- [ ] Wizard exige pelo menos 1 criança.
+- [ ] Usuário só consegue usar o app após completar cadastro rigoroso.
+- [ ] `family_unit` setado desde o início para isolar dados.
+
+### Módulo 2 – Endereços
+
+- [ ] Toda localização vinculada a `family_unit_id`.
+- [ ] Histórico de uso (`location_usage_history`) associado ao evento (retirada, devolução, compromisso).
+- [ ] Integração com GPS usada apenas quando autorizado pelo usuário.
+
+### Módulo 3 – Calendário & Convivência
+
+- [ ] Eventos de convivência (`custody_events`) sempre com `family_unit_id` e `child_id`.
+- [ ] Check-ins registram GPS + status (`on_time`, `late`).
+- [ ] Cada check-in gera evento em `event_log`.
+
+### Módulo 4 – Financeiro & Orçamentos
+
+- [ ] Despesas (`expenses`) com:
+  - `attachment_url` + `attachment_hash_sha256`.
+- [ ] Soft delete implementado.
+- [ ] Criação/atualização/exclusão → eventos em `event_log`.
+
+### Módulo 5 – Chat com IA
+
+- [ ] Mensagens (`chat_messages`) com:
+  - `toxicity_score`, `sentiment_score`, `moderation_status`.
+- [ ] Mensagens tóxicas não desaparecem do log (probatório), mas são marcadas adequadamente.
+- [ ] Chat é por família (1 canal oficial por `family_unit`).
+- [ ] Leituras marcadas (`chat_message_reads`) para prova de leitura.
+
+### Módulo 6 – Gamificação Infantil
+
+- [ ] Modo Criança isolado de dados sensíveis.
+- [ ] Tarefas e pontos sempre vinculados a uma `child_id`.
+- [ ] Recompensas e pontos podem constar em relatórios (opcional) como evidência de colaboração na rotina.
+
+### Módulo 7 – Compromissos Avançados
+
+- [ ] Status histórico (9 status) registrado em tabela separada ou campo + `status_history`.
+- [ ] Atrasos detectados automaticamente (baseado em horário planejado vs real).
+- [ ] Toda mudança de status gera evento em `event_log`.
+
+### Módulo 8 – Relatórios Jurídicos
+
+- [ ] Geração de PDF a partir de `event_log` e demais entidades.
+- [ ] Hash SHA‑256 no rodapé e banco.
+- [ ] Filtros por período, tipo de dado e criança implementados.
+
+### Módulo 9 – Infraestrutura Invisível
+
+- [ ] Botão de exclusão de conta funcionando.
+- [ ] Anonimização de dados sensíveis ao excluir conta.
+- [ ] Offline-first sem comprometer integridade (fila de sincronização consistente).
+
+---
+
+## 10. COMO O TONY DEV DEVE USAR ESTE ARQUIVO
+
+- Antes de implementar **ou revisar** qualquer módulo:
+  - Ler a seção correspondente deste `LEGAL_SUMMARY.md`.
+  - Garantir que os requisitos de:
+    - multi-tenant,
+    - soft delete,
+    - hash,
+    - event_log,
+    - Modo Criança,
+    - exclusão/anonimização
+    estejam contemplados no código.
+
+- Em caso de dúvida:
+  - Marcar com comentário `TODO: confirmar com jurídico` no código ou no `PRODUCT_SPEC.moduloX.md`.
+  - Não remover comportamentos que reforçam segurança jurídica sem alinhamento explícito.
+
+---
+
+**FIM DO RESUMO LEGAL TÉCNICO – Versão 1.0 (MVP com Gamificação Completa)**

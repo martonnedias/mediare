@@ -1,0 +1,449 @@
+MEDIARE - MGCF
+MEDIADOR DE GUARDA & COMPLIANCE FAMILIAR
+DOCUMENTO MESTRE - VISÃO GERAL DO PROJETO
+INFORMAÇÕES DO PRODUTO
+Nome Oficial: MEDIARE - MGCF (Mediador de Guarda & Compliance Familiar)
+Tagline: "Transformando conflitos em acordos, registros em provas e obrigações em
+conquistas"
+Versão Atual: 1.0 (MVP com Gamificação Completa)
+Versão Futura: 2.0 (Fintech, IA Preditiva e Integrações)
+Categoria: SaaS (Software as a Service)
+Plataforma: Mobile-first (Android + iOS) com possível expansão Web
+Modelo de Negócio: Freemium com assinatura Premium
+VISÃO ESTRATÉGICA
+Problema que Resolve
+Famílias separadas enfrentam desafios diários:
+Conflitos sobre convivência e troca de datas
+Disputas financeiras sobre despesas da criança
+Falta de provas para processos judiciais
+Comunicação hostil entre genitores
+Ansiedade da criança com a separação
+Desinformação sobre rotina escolar e saúde
+Solução Oferecida
+MEDIARE transforma a gestão de guarda compartilhada em um processo:
+Organizado: Calendário centralizado, endereços cadastrados, compromissos rastreados
+Transparente: Linha do tempo imutável, hash de integridade, relatórios auditáveis
+Juridicamente Válido: Provas robustas aceitas em tribunais
+Pacífico: IA modera comunicação, reduzindo conflitos
+Educativo: Gamificação engaja a criança, transformando obrigações em conquistas
+Diferenciais Competitivos
+1. Segurança Jurídica Total
+Registros imutáveis com hash SHA-256Relatórios prontos para tribunais
+Linha do tempo auditável
+Soft delete (nunca apaga dados)
+1. Gamificação Infantil Completa (V1)
+Sistema de pontos (StarPoints)
+Recompensas configuráveis pelos pais
+Interface lúdica "Jornada do Herói"
+Conquistas e badges
+1. Multi-Família e Multi-Criança
+Suporte a múltiplos núcleos familiares por usuário
+Isolamento total de dados entre famílias
+Gestão independente por criança
+1. IA de Mediação
+Moderação automática de mensagens
+Análise de sentimento em tempo real
+Sugestões de reescrita neutra
+Detecção de toxicidade
+1. Sistema de Orçamentos
+Aprovação prévia de despesas
+Negociação estruturada de rateios
+Histórico completo de acordos financeiros
+1. Gestão Avançada de Compromissos
+Rastreamento de execução em tempo real
+9 status diferentes (Agendado, Confirmado, Em Andamento, Cumprido, Atrasado, etc)
+Detecção automática de atrasos
+Checklist pré e pós-compromisso
+1. Módulo de Endereços Inteligente
+Cadastro de localizações pré-definidas
+Integração com GPS e Google Maps
+Verificação de proximidade
+Histórico de uso por localização
+PÚBLICO-ALVO
+Primário
+Genitores Separados
+Em processo de separação ou já separados
+Com ou sem acordo judicial formal
+Guarda compartilhada ou unilateral
+Diferentes níveis de colaboração com o ex-parceiro
+Perfis:
+Genitor Colaborativo: Usa todas as funções (calendário, chat, financeiro, gamificação,
+relatórios)
+Genitor Unilateral: Opera como "Diário de Bordo" sem adesão do ex-parceiro
+SecundárioProfissionais Jurídicos
+Advogados de família
+Peritos judiciais
+Mediadores
+Defensores públicos
+Crianças e Adolescentes
+Faixa etária: 4-17 anos
+Acesso via Modo Criança (interface lúdica e segura)
+Instituições
+Escolas com alunos de pais separados
+Psicólogos e terapeutas familiares
+Assistentes sociais
+PROPOSTA DE VALOR
+Para Genitores
+Segurança Jurídica
+Provas robustas para processos
+Relatórios aceitos em tribunais
+Hash de integridade em todas as mídias
+Paz Financeira
+Rateio automático de despesas
+Aprovação prévia de gastos (orçamentos)
+Histórico completo e auditável
+Redução de Conflitos
+IA modera comunicação hostil
+Acordos formalizados digitalmente
+Registro de descumprimentos
+Organização da Rotina
+Calendário centralizado
+Endereços pré-cadastrados
+Compromissos rastreados
+Check-ins com GPS
+Para Crianças
+Engajamento Positivo
+Gamificação completa desde o dia 1
+Pontos, níveis e recompensas
+Interface lúdica "Jornada do Herói"
+Redução de AnsiedadeVisualização clara da agenda
+Saber onde estará e quando
+Conquistas e feedback positivo
+Educação
+Metas educativas
+Tarefas escolares gamificadas
+Gráficos de evolução
+Para Profissionais Jurídicos
+Eficiência
+Relatórios prontos em PDF
+Linha do tempo cronológica
+Dados auditáveis
+Confiabilidade
+Hash de integridade
+Registros imutáveis
+Conformidade LGPD
+MODELO DE NEGÓCIO
+Versão 1.0 (MVP)
+Plano FREE
+Calendário básico
+Chat com moderação básica
+1 família
+1 criança
+Relatórios limitados (1 por mês)
+Plano PREMIUM (R¨D 29,90/mês ou R¨D 299/ano)
+Múltiplas famílias
+Múltiplas crianças
+Relatórios ilimitados
+Hash de integridade
+Gamificação completa
+Orçamentos e compromissos avançados
+Módulo de endereços
+Armazenamento em nuvem ilimitado
+Suporte prioritário
+Versão 2.0 (Futuro)
+Receita Transacional (Fintech)
+Taxa sobre pagamentos via Pix/Boleto
+Split de pagamento de contas
+Carteira digital familiarMarketplace
+Indicação de profissionais (psicólogos, advogados, peritos)
+Lead fee por indicação
+B2B (Licenças Corporativas)
+Escolas: Gestão de alunos com pais separados
+Escritórios de advocacia: Licenças em lote para clientes
+Planos de saúde: Integração de dados
+ARQUITETURA DO SISTEMA
+Stack Tecnológico
+Backend
+Linguagem: Python 3.11+
+Framework: FastAPI
+Banco de Dados: PostgreSQL 14+
+Storage: AWS S3 ou Firebase Storage
+Autenticação: Firebase Authentication
+Cache: Redis
+Tarefas Assíncronas: Celery
+Frontend Mobile
+Framework: Flutter (Dart 3.0+)
+State Management: Flutter Bloc
+Cache Local: Hive
+Mapas: Google Maps Flutter
+Notificações: Firebase Messaging
+Infraestrutura
+Hospedagem: AWS, GCP ou Azure
+Containerização: Docker
+CI/CD: GitHub Actions
+Monitoramento: Sentry + Firebase Crashlytics
+Integrações
+IA: OpenAI GPT-4 (moderação de chat)
+Geolocalização: Google Maps API
+Pagamentos (V2): Iugu, Asaas ou Stripe
+Segurança
+Autenticação e Autorização
+JWT com expiração de 24h
+Refresh tokens com rotação
+Row Level Security (RLS)
+Isolamento multi-tenant por família
+DadosCriptografia em repouso (AES-256)
+Criptografia em trânsito (TLS 1.3)
+Hash SHA-256 para integridade de mídias
+Soft delete (nunca apaga dados)
+Conformidade
+LGPD compliant
+Políticas de retenção de dados
+Anonimização ao excluir conta
+Consentimento explícito para uso de dados
+MÓDULOS DO SISTEMA
+MÓDULO 1: Cadastro Rigoroso & Multi-Família
+Wizard obrigatório de cadastro
+Validação de CPF e RG
+Upload de foto de perfil (selfie)
+Cadastro de crianças (mínimo 1)
+Modo Colaborativo vs. Unilateral
+Suporte a múltiplas famílias (Premium)
+MÓDULO 2: Gestão de Endereços e Localizações
+Cadastro de endereços completos
+Tipos pré-definidos (Casa Pai, Casa Mãe, Escola, etc)
+Geocodificação automática via Google Maps
+Verificação de proximidade GPS
+Histórico de uso de localizações
+Visibilidade configurável entre genitores
+MÓDULO 3: Calendário & Convivência
+Calendário de guarda oficial
+Filtro por criança
+Solicitação de troca de datas
+Check-in de retirada/devolução com GPS
+Registro de atrasos
+Integração com endereços cadastrados
+MÓDULO 4: Financeiro & Orçamentos
+Registro de despesas com comprovantes
+Rateio automático configurável
+Sistema de orçamentos com aprovação prévia
+Negociação de rateios
+Histórico completo
+Hash de integridade em comprovantes
+MÓDULO 5: Chat com IA & Mediação
+Chat oficial por família
+Moderação automática por IA
+Análise de sentimentoBloqueio de mensagens tóxicas
+Sugestão de reescrita neutra
+Prova de leitura (read receipts)
+Transformação de mensagens em tarefas/acordos
+MÓDULO 6: Gamificação Infantil (Modo Criança)
+Sistema de pontos (StarPoints)
+Níveis progressivos (Bronze Diamante)
+Tarefas criadas pelos pais
+Execução e aprovação de tarefas
+Recompensas configuráveis
+Conquistas e badges
+Interface lúdica "Jornada do Herói"
+Isolamento total de dados sensíveis
+MÓDULO 7: Compromissos Avançados
+Criação de compromissos detalhados
+Tipos: Passeios, Viagens, Saídas, Atividades
+Responsabilidades de transporte (quem busca/traz)
+Responsabilidades financeiras (quem paga o quê)
+Integração com endereços cadastrados
+9 status de execução
+Detecção automática de atrasos
+Checklist pré e pós-compromisso
+Histórico de mudanças
+MÓDULO 8: Relatórios Jurídicos
+Linha do tempo imutável
+Exportação em PDF com assinatura digital
+Hash SHA-256 no rodapé
+Filtros por período, tipo de dado, criança
+Estatísticas de cumprimento
+Anexos de evidências
+Conformidade jurídica
+MÓDULO 9: Infraestrutura Invisível
+Offline-first (cache local)
+Deep linking em notificações
+Feature flags (Remote Config)
+Monitoramento de erros (Crashlytics/Sentry)
+Exclusão de conta (compliance Apple/Google)
+Compressão automática de imagens
+Sincronização automática
+ROADMAP DE DESENVOLVIMENTO
+FASE 1: MVP (Versão 1.0) - 20 Sprints
+Sprint 1-2: Infraestrutura e Autenticação
+Configuração AWS/FirebaseAutenticação (Firebase Auth)
+Tabelas: users, family_units, children
+Wizard de cadastro rigoroso
+Sprint 3-4: Núcleo Familiar
+Lógica Multi-Família
+Modo Colaborativo vs. Unilateral
+Context Switcher
+Filtros por criança
+Sprint 5-6: Módulo de Endereços
+Tabelas: locations, locationusagehistory
+Cadastro de endereços completos
+Geocodificação via Google Maps
+Verificação de proximidade GPS
+Histórico de uso
+Sprint 7-8: Calendário e Convivência
+Calendário com check-in GPS
+Solicitação de trocas de datas
+Integração com endereços
+Visualização lúdica para Modo Criança
+Sprint 9-10: Financeiro Base
+Registro de despesas com anexos
+Rateio automático
+Vinculação por criança
+Upload S3 e hash de integridade
+Sprint 11-12: Sistema de Orçamentos
+Criação de orçamentos
+Aprovação/recusa
+Negociação de rateios
+Vinculação com compromissos
+Sprint 13-14: Chat com IA
+Chat oficial por família
+Moderação por IA (OpenAI)
+Prova de leitura
+Transformação em tarefas
+Sprint 15-17: Gamificação Completa
+Sistema de pontos e níveis
+Tarefas (criação, execução, aprovação)
+Recompensas (catálogo, solicitação, aprovação)
+Conquistas automáticas
+Modo Criança (interface lúdica)
+Jornada do Herói
+Sprint 18-19: Compromissos AvançadosCriação de compromissos detalhados
+Sistema de status completo
+Detecção de atrasos
+Checklist inteligente
+Histórico de mudanças
+Sprint 20-21: Relatórios Jurídicos
+Geração de PDF com reportlab
+Linha do tempo imutável
+Hash SHA-256 no rodapé
+Filtros avançados
+Sprint 22-23: Infraestrutura Invisível
+Offline-first (cache local)
+Deep linking
+Feature flags
+Monitoramento (Crashlytics/Sentry)
+Exclusão de conta
+Sprint 24-25: Testes e Ajustes
+Testes unitários e de integração
+Testes end-to-end
+Ajustes de UX/UI
+Correção de bugs
+Otimização de performance
+Sprint 26-27: Preparação para Lançamento
+Documentação final
+Treinamento de suporte
+Configuração de analytics
+Submissão para Apple Store e Google Play
+FASE 2: Growth (Versão 2.0) - Futuro
+Fintech Integrada
+Carteiras digitais
+Pagamento via Pix/Boleto integrado
+Split de pagamento
+Pagamentos recorrentes (mesada, pensão)
+IA Preditiva
+Análise de sentimento em tendência
+Curva de tensão entre genitores
+Sugestões proativas de ajustes
+Otimização de guarda
+Integrações (Open Family)
+Escolas: Importação de notas, faltas, agenda
+Saúde: Receitas digitais, vacinação (ConecteSUS)
+Portais escolares (scraping seguro)Marketplace
+Cadastro de psicólogos, advogados, peritos
+Sistema de indicações
+Avaliações e reviews
+B2B
+Licenças corporativas para escolas
+Licenças para escritórios de advocacia
+Dashboards administrativos
+DIFERENCIAIS TÉCNICOS
+Isolamento Multi-Tenant
+Cada família é um tenant isolado
+Queries sempre filtradas por family_unit_id
+Impossível vazar dados entre famílias
+Row Level Security (RLS)
+Imutabilidade Jurídica
+Soft delete obrigatório
+Nunca apaga dados fisicamente
+Histórico completo de mudanças
+Hash SHA-256 em todas as mídias
+Offline-First
+Cache local de dados críticos
+Sincronização automática
+Funcionamento sem internet
+Fila de pendências
+Gamificação Robusta
+Sistema de pontos 100% confiável
+Sem bugs de duplicação ou perda
+Notificações em tempo real
+Animações e sons de feedback
+IA de Mediação
+Análise de sentimento em tempo real
+Bloqueio de mensagens tóxicas
+Sugestões de reescrita neutra
+Aprendizado contínuo
+MÉTRICAS DE SUCESSO
+Versão 1.0 (MVP)
+Aquisição1.000 usuários nos primeiros 3 meses
+50% de conversão do cadastro para primeira família criada
+30% de ativação (primeira despesa ou evento registrado)
+Engajamento
+60% de usuários ativos semanalmente (WAU)
+3+ sessões por semana por usuário
+5+ eventos/despesas registrados por mês
+Retenção
+70% de retenção no primeiro mês
+50% de retenção no terceiro mês
+40% de retenção no sexto mês
+Monetização
+15% de conversão para Premium nos primeiros 3 meses
+LTV (Lifetime Value) de R¨D 500 por usuário Premium
+CAC (Custo de Aquisição) < R¨D 100
+Qualidade
+NPS (Net Promoter Score) > 50
+App Store Rating > 4.5 estrelas
+Crash rate < 1%
+Versão 2.0 (Growth)
+Fintech
+40% dos usuários Premium realizam pelo menos 1 transação/mês
+R¨D 50.000 em volume transacional mensal (GMV)
+2% de taxa média por transação
+Engajamento Infantil
+80% das crianças cadastradas usam o Modo Criança
+10+ tarefas completadas por criança/mês
+5+ recompensas resgatadas por criança/mês
+Integrações
+30% dos usuários conectam pelo menos 1 integração (escola/saúde)
+50+ escolas parceiras
+10+ planos de saúde integrados
+RISCOS E MITIGAÇÕES
+Risco 1: Baixa Adesão do Parceiro (Modo Unilateral)
+Mitigação: Modo Unilateral robusto que funciona como "Diário de Bordo" independente
+Risco 2: Rejeição nas Lojas (Apple/Google)Mitigação: Compliance total com guidelines, botão de exclusão de conta, offline-first
+Risco 3: Dados Sensíveis de Crianças
+Mitigação: Modo Criança isolado, sem acesso a dados sensíveis, conformidade LGPD
+Risco 4: Conflitos Jurídicos sobre Validade de Provas
+Mitigação: Hash SHA-256, soft delete, linha do tempo imutável, conformidade técnica
+Risco 5: Custo de IA (Moderação de Chat)
+Mitigação: Feature flags para desligar IA remotamente, cache de análises, otimização de
+prompts
+Risco 6: Complexidade de Múltiplas Famílias
+Mitigação: Context Switcher claro, isolamento total de dados, UX intuitiva
+CONCLUSÃO
+MEDIARE - MGCF é mais do que um app de calendário. É o Sistema Operacional da Família
+Separada, transformando:
+Conflitos em acordos (IA de mediação)
+Registros em provas (hash de integridade)
+Obrigações em conquistas (gamificação infantil)
+Com uma base sólida na V1.0 (segurança jurídica + gamificação) e uma visão clara para V2.0
+(fintech + integrações), o produto cria barreiras de saída altas:
+1. Financeira: Dependência para pagamentos
+2. Emocional: Criança engajada com recompensas
+3. Operacional: Rotina centralizada
+4. Jurídica: Histórico completo de convivência
+O app deixa de ser um "mal necessário" e vira um "bem indispensável".
+Versão do Documento: 1.0
+Data: Fevereiro de 2026
+Autor: Especificação Técnica MEDIARE - MGCF
+Status: Pronto para Desenvolvimento ```
+Agora vou criar os arquivos individuais para cada módulo. Devido ao limite de caracteres, vou
+criar os módulos mais importantes como documentos separados:
